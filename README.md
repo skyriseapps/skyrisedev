@@ -18,7 +18,7 @@ Uygulama, Google AdMob tarafından sağlanan reklamlar içerir. AdMob kendi gizl
 - Google ML Kit
 
 ## İletişim
-Sorularınız için: skyriseapps@gmail.com (veya kendi mailin)
+Sorularınız için: skyriseapps@gmail.com
 
 ## Değişiklikler
 Bu politika zaman zaman güncellenebilir. Değişiklikler bu sayfada yayınlanır.
