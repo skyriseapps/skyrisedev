@@ -1,31 +1,188 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gizlilik Politikası - QR ve Barkod Tarayıcı</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
-        h1 { color: #00897B; }
-        h2 { color: #333; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkyriseDev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --surface: #101010;
+      --border: rgba(255,255,255,0.07);
+      --accent: #c8ff00;
+      --accent-dim: rgba(200,255,0,0.12);
+      --text: #f0f0f0;
+      --muted: #555;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Radial glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(200,255,0,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(200,255,0,0.25);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s forwards;
+    }
+
+    .badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .logo {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.75rem, 2vw, 0.9rem);
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-top: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.6s forwards;
+    }
+
+    .divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+      margin: 2.5rem auto;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.7s forwards;
+    }
+
+    .coming-soon {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.8s forwards;
+    }
+
+    .links {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 1s forwards;
+    }
+
+    .links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .links a:hover {
+      color: var(--accent);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <h1>Gizlilik Politikası - QR ve Barkod Tarayıcı</h1>
-    <p><strong>Son güncelleme:</strong> Mart 2026</p>
+  <div class="container">
+    <div class="badge">Status: In development</div>
+    <div class="logo">Skyrise<span>Dev</span></div>
+    <div class="tagline">Mobile apps crafted with care</div>
+    <div class="divider"></div>
+    <div class="coming-soon">Something is coming soon</div>
+  </div>
 
-    <h2>Giriş</h2>
-    <p>SkyRise Apps olarak gizliliğinizi önemsiyoruz. Bu politika, QR ve Barkod Tarayıcı uygulamasının hangi verileri topladığını açıklar.</p>
-
-    <h2>Toplanan Veriler</h2>
-    <p><strong>Kamera:</strong> QR ve barkod taramak için kullanılır. Görüntüler kaydedilmez veya paylaşılmaz.</p>
-    <p><strong>Depolama:</strong> Oluşturulan QR kodlarını galeriye kaydetmek için kullanılır.</p>
-    <p><strong>Tarama geçmişi:</strong> Yalnızca cihazınızda yerel olarak saklanır.</p>
-
-    <h2>Reklamlar</h2>
-    <p>Uygulama Google AdMob reklamları içerir. AdMob'un gizlilik politikası: <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a></p>
-
-    <h2>İletişim</h2>
-    <p>Sorularınız için: skyriseapps@gmail.com</p>
+  <div class="links">
+    <a href="/qr-privacy.html">QR Scanner — Privacy Policy</a>
+    <a href="/math-privacy.html">Mırmır Math — Privacy Policy</a>
+  </div>
 </body>
 </html>
