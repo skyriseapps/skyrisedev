@@ -1,0 +1,10 @@
+# GitHub Pages Configuration
+include:
+  - .well-known
+  - .well-known/assetlinks.json
+  - app-ads.txt
+
+exclude:
+  - .git
+  - .gitignore
+  - README.md
