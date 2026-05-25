@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.skyriseapps.qrbarcodescanner",
+      "sha256_cert_fingerprints": [
+        "BE:41:B3:0D:D9:2D:97:49:6A:E2:73:CE:C1:82:83:A0:8A:6D:22:72:6B:D9:7F:73:58:F0:10:54:9F:B7:D5:21"
+      ]
+    }
+  }
+]
