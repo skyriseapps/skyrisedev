@@ -8,3 +8,14 @@ exclude:
   - .git
   - .gitignore
   - README.md
+# GitHub Pages + Jekyll
+plugins:
+  - jekyll-feed
+
+include: [app-ads.txt]
+
+# Eğer Jekyll kullanmıyorsanız
+# (basit HTML sayfalarınız varsa)
+# Bu satırı ekleyin:
+keep_files:
+  - app-ads.txt
