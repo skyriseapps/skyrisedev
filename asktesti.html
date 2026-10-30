@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" class="scroll-smooth">
+<html lang="tr" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,115 +11,48 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            serif: ['Playfair Display', 'serif'],
-          },
-          animation: {
-            'float-slow': 'floatSlow 6s ease-in-out infinite',
-            'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite',
-          },
-          keyframes: {
-            floatSlow: {
-              '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            pulseSoft: {
-              '0%, 100%': { transform: 'scale(1)' },
-              '50%': { transform: 'scale(1.06)' },
-            }
-          }
-        }
-      }
+      theme: { extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Playfair Display', 'serif'] },
+        animation: { 'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite' },
+        keyframes: { pulseSoft: { '0%, 100%': { transform: 'scale(1)' }, '50%': { transform: 'scale(1.06)' } } }
+      } }
     }
   </script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-    }
-    html:not(.dark) .glass-card {
-      background: rgba(255, 255, 255, 0.85);
-      border: 1px solid rgba(244, 63, 94, 0.18);
-      box-shadow: 0 20px 45px -15px rgba(244, 63, 94, 0.12);
-    }
-
-    html:not(.dark) body {
-      background-color: #fff1f2;
-      color: #1e293b;
-    }
-    html:not(.dark) header {
-      background: rgba(255, 255, 255, 0.85) !important;
-      border-color: rgba(244, 63, 94, 0.15) !important;
-    }
-    html:not(.dark) input {
-      background: rgba(255, 255, 255, 0.95) !important;
-      color: #0f172a !important;
-      border-color: rgba(244, 63, 94, 0.3) !important;
-    }
-    html:not(.dark) .bg-slate-900\/50,
-    html:not(.dark) .bg-white\/5 {
-      background: rgba(255, 241, 242, 0.75) !important;
-      border-color: rgba(244, 63, 94, 0.18) !important;
-    }
-    html:not(.dark) .text-white {
-      color: #0f172a !important;
-    }
-    html:not(.dark) .text-slate-300,
-    html:not(.dark) .text-slate-200,
-    html:not(.dark) .text-slate-400 {
-      color: #475569 !important;
-    }
-    html:not(.dark) .text-rose-200,
-    html:not(.dark) .text-rose-300 {
-      color: #be123c !important;
-    }
-    html:not(.dark) .text-fuchsia-200,
-    html:not(.dark) .text-fuchsia-300 {
-      color: #a21caf !important;
-    }
-    html:not(.dark) .text-indigo-200,
-    html:not(.dark) .text-indigo-300 {
-      color: #4338ca !important;
-    }
-    html:not(.dark) .text-emerald-200,
-    html:not(.dark) .text-emerald-300 {
-      color: #047857 !important;
-    }
-    html:not(.dark) .text-amber-200,
-    html:not(.dark) .text-amber-300 {
-      color: #b45309 !important;
-    }
-
-    .ring-progress {
-      transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .bar-fill {
-      transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+    body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    .glass-card { background: rgba(255,255,255,0.07); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.14); }
+    html:not(.dark) .glass-card { background: rgba(255,255,255,0.85); border: 1px solid rgba(244,63,94,0.18); box-shadow: 0 20px 45px -15px rgba(244,63,94,0.12); }
+    html:not(.dark) body { background-color: #fff1f2; color: #1e293b; }
+    html:not(.dark) header { background: rgba(255,255,255,0.85) !important; border-color: rgba(244,63,94,0.15) !important; }
+    html:not(.dark) input { background: rgba(255,255,255,0.95) !important; color: #0f172a !important; border-color: rgba(244,63,94,0.3) !important; }
+    html:not(.dark) .bg-slate-900\/50, html:not(.dark) .bg-white\/5 { background: rgba(255,241,242,0.75) !important; border-color: rgba(244,63,94,0.18) !important; }
+    html:not(.dark) .bg-white\/10 { background-color: rgba(244,63,94,0.12); }
+    html:not(.dark) .text-white { color: #0f172a !important; }
+    html:not(.dark) .text-slate-300, html:not(.dark) .text-slate-200, html:not(.dark) .text-slate-400 { color: #475569 !important; }
+    html:not(.dark) .text-rose-200, html:not(.dark) .text-rose-300 { color: #be123c !important; }
+    html:not(.dark) .text-fuchsia-200, html:not(.dark) .text-fuchsia-300 { color: #a21caf !important; }
+    html:not(.dark) .text-indigo-200, html:not(.dark) .text-indigo-300 { color: #4338ca !important; }
+    html:not(.dark) .text-emerald-200, html:not(.dark) .text-emerald-300 { color: #047857 !important; }
+    html:not(.dark) .text-amber-200, html:not(.dark) .text-amber-300 { color: #b45309 !important; }
+    /* Açık temada beyaz kalması gerekenler (gradyan butonlar, logo, bildirim) */
+    html:not(.dark) button[type="submit"].text-white, html:not(.dark) svg.text-white { color: #fff !important; }
+    html:not(.dark) #toastBox, html:not(.dark) #toastBox * { color: #fff !important; }
+    /* Açık temada kişilik başlık kartı */
+    html:not(.dark) #personaBanner { background: rgba(238,242,255,0.9) !important; }
+    .ring-progress { transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .bar-fill { transition: width 1s cubic-bezier(0.22, 1, 0.36, 1); }
   </style>
 </head>
 <body class="dark bg-slate-950 text-slate-100 transition-colors duration-300 selection:bg-rose-500 selection:text-white min-h-screen flex flex-col">
 
-  <!-- Background Ambient Glows -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
     <div class="absolute -top-28 -left-28 w-96 h-96 rounded-full bg-rose-600/20 blur-3xl"></div>
     <div class="absolute top-1/3 -right-28 w-96 h-96 rounded-full bg-fuchsia-600/20 blur-3xl"></div>
     <div class="absolute -bottom-28 left-1/4 w-96 h-96 rounded-full bg-indigo-600/20 blur-3xl"></div>
   </div>
 
-  <!-- Interactive Particle Canvas -->
   <canvas id="fxCanvas" class="fixed inset-0 pointer-events-none z-20"></canvas>
 
-  <!-- Toast Notification -->
   <div id="toastBox" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
     <div class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/95 text-white border border-rose-500/40 shadow-2xl">
       <span id="toastIcon" class="text-lg">✨</span>
@@ -127,231 +60,115 @@
     </div>
   </div>
 
-  <!-- Top Navigation -->
-  <header class="sticky top-0 z-30 backdrop-blur-md bg-slate-950/75 dark:bg-slate-950/75 border-b border-white/10 transition-colors">
+  <header class="sticky top-0 z-30 backdrop-blur-md bg-slate-950/75 border-b border-white/10 transition-colors">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
       <a href="#ask-testi" class="flex items-center gap-2.5 group">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-rose-500/25 group-hover:scale-105 transition-transform">
-          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </div>
-        <span class="font-bold tracking-tight text-base sm:text-lg bg-gradient-to-r from-rose-400 via-pink-300 to-violet-400 bg-clip-text text-transparent">
-          Aşk & Karakter
-        </span>
+        <span class="font-bold tracking-tight text-base sm:text-lg bg-gradient-to-r from-rose-400 via-pink-300 to-violet-400 bg-clip-text text-transparent">Aşk & Karakter</span>
       </a>
-
       <nav class="flex items-center gap-1 sm:gap-2">
-        <a href="#ask-testi" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">
-          💘 Aşk Yüzdesi
-        </a>
-        <a href="#kisilik-analizi" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">
-          🔮 Kişilik Analizi
-        </a>
-        <a href="#gecmis-bolumu" class="hidden sm:inline-flex px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">
-          📜 Sonuçlar (<span id="navHistoryCount">0</span>)
-        </a>
-        <button id="themeToggleBtn" type="button" aria-label="Tema Değiştir" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm" title="Gece / Gündüz Modu">
-          <span id="themeIcon">☀️</span>
-        </button>
+        <a href="#ask-testi" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">💘 Aşk Yüzdesi</a>
+        <a href="#kisilik-analizi" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">🔮 Kişilik Analizi</a>
+        <a href="#gecmis-bolumu" class="hidden sm:inline-flex px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">📜 Sonuçlar (<span id="navHistoryCount">0</span>)</a>
+        <button id="themeToggleBtn" type="button" aria-label="Tema Değiştir" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors text-sm" title="Gece / Gündüz Modu"><span id="themeIcon">☀️</span></button>
       </nav>
     </div>
   </header>
 
   <main class="flex-1">
-    <!-- SECTION 1: LOVE PERCENTAGE CALCULATOR -->
     <section id="ask-testi" class="min-h-[calc(100vh-4rem)] flex flex-col justify-between py-8 sm:py-12 px-4 sm:px-6 max-w-5xl mx-auto">
       <div class="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs font-semibold mb-4">
           <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
-          Rastgele Aşk & Uyum Ölçer
+          İsme Özel Aşk & Uyum Ölçer
         </div>
         <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-3">
           İsimlerden <span class="font-serif italic bg-gradient-to-r from-rose-400 via-pink-400 to-fuchsia-400 bg-clip-text text-transparent">Aşk Yüzdesi</span> Hesapla
         </h1>
-        <p class="text-sm sm:text-base text-slate-400">
-          İki ismi girin ve aranızdaki rastgele enerji uyumunu, romantizm skorunu ve eğlenceli ilişki yorumunu anında keşfedin.
-        </p>
+        <p class="text-sm sm:text-base text-slate-400">İki ismi girin; aranızdaki enerji uyumunu, romantizm skorunu ve eğlenceli ilişki yorumunu anında keşfedin. Aynı isimler her zaman aynı sonucu verir.</p>
       </div>
 
-      <!-- Main Love Card -->
       <div class="glass-card rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden">
-        <!-- Quick Example Chips -->
         <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
           <span class="text-xs text-slate-400 mr-1">Hızlı Örnek:</span>
-          <button type="button" data-pair="Deniz,Mert" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">
-            Deniz & Mert
-          </button>
-          <button type="button" data-pair="Elif,Can" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">
-            Elif & Can
-          </button>
-          <button type="button" data-pair="Zeynep,Burak" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">
-            Zeynep & Burak
-          </button>
-          <button type="button" data-pair="Selin,Kaan" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">
-            Selin & Kaan
-          </button>
+          <button type="button" data-pair="Deniz,Mert" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">Deniz & Mert</button>
+          <button type="button" data-pair="Elif,Can" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">Elif & Can</button>
+          <button type="button" data-pair="Zeynep,Burak" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">Zeynep & Burak</button>
+          <button type="button" data-pair="Selin,Kaan" class="quick-pair-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-rose-500/20 border border-white/10 hover:border-rose-400/40 transition-all">Selin & Kaan</button>
         </div>
 
-        <!-- Inputs Row -->
         <form id="loveForm" class="grid grid-cols-1 md:grid-cols-11 gap-3 sm:gap-4 items-center">
           <div class="md:col-span-5">
-            <label for="loveName1" class="block text-xs font-semibold uppercase tracking-wider text-rose-300 mb-1.5 ml-1">
-              1. Kişinin İsmi
-            </label>
+            <label for="loveName1" class="block text-xs font-semibold uppercase tracking-wider text-rose-300 mb-1.5 ml-1">1. Kişinin İsmi</label>
             <div class="relative">
-              <input
-                id="loveName1"
-                type="text"
-                maxlength="35"
-                placeholder="Örn: Elif"
-                autocomplete="off"
-                class="w-full px-4 py-3.5 rounded-2xl bg-slate-900/70 border border-white/15 focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 outline-none text-base font-medium placeholder:text-slate-500 transition-all"
-              />
+              <input id="loveName1" type="text" maxlength="35" placeholder="Örn: Elif" autocomplete="off" class="w-full px-4 py-3.5 rounded-2xl bg-slate-900/70 border border-white/15 focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 outline-none text-base font-medium placeholder:text-slate-500 transition-all" />
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none">💖</span>
             </div>
           </div>
-
           <div class="md:col-span-1 flex justify-center py-1 md:pt-5">
-            <button
-              id="swapNamesBtn"
-              type="button"
-              title="İsimleri Değiştir"
-              class="w-11 h-11 rounded-2xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-400/30 flex items-center justify-center text-rose-300 hover:rotate-180 transition-all duration-300"
-            >
-              ⇄
-            </button>
+            <button id="swapNamesBtn" type="button" title="İsimleri Değiştir" class="w-11 h-11 rounded-2xl bg-rose-500/15 hover:bg-rose-500/30 border border-rose-400/30 flex items-center justify-center text-rose-300 hover:rotate-180 transition-all duration-300">⇄</button>
           </div>
-
           <div class="md:col-span-5">
-            <label for="loveName2" class="block text-xs font-semibold uppercase tracking-wider text-fuchsia-300 mb-1.5 ml-1">
-              2. Kişinin İsmi
-            </label>
+            <label for="loveName2" class="block text-xs font-semibold uppercase tracking-wider text-fuchsia-300 mb-1.5 ml-1">2. Kişinin İsmi</label>
             <div class="relative">
-              <input
-                id="loveName2"
-                type="text"
-                maxlength="35"
-                placeholder="Örn: Can"
-                autocomplete="off"
-                class="w-full px-4 py-3.5 rounded-2xl bg-slate-900/70 border border-white/15 focus:border-fuchsia-400 focus:ring-2 focus:ring-fuchsia-500/30 outline-none text-base font-medium placeholder:text-slate-500 transition-all"
-              />
+              <input id="loveName2" type="text" maxlength="35" placeholder="Örn: Can" autocomplete="off" class="w-full px-4 py-3.5 rounded-2xl bg-slate-900/70 border border-white/15 focus:border-fuchsia-400 focus:ring-2 focus:ring-fuchsia-500/30 outline-none text-base font-medium placeholder:text-slate-500 transition-all" />
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none">💘</span>
             </div>
           </div>
-
           <div class="md:col-span-11 flex flex-col sm:flex-row items-center justify-center gap-3 mt-3">
-            <button
-              type="submit"
-              class="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-600 hover:from-rose-400 hover:to-fuchsia-500 text-white font-bold text-base shadow-xl shadow-rose-500/25 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
-            >
-              <span>✨ Aşk Yüzdesini Hesapla</span>
-            </button>
-            <button
-              id="randomPairBtn"
-              type="button"
-              class="w-full sm:w-auto px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 font-semibold text-sm transition-all flex items-center justify-center gap-2"
-            >
-              <span>🎲 Rastgele Çift Üret</span>
-            </button>
+            <button type="submit" class="w-full sm:w-auto min-w-[240px] px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-600 hover:from-rose-400 hover:to-fuchsia-500 text-white font-bold text-base shadow-xl shadow-rose-500/25 active:scale-[0.99] transition-all flex items-center justify-center gap-2"><span>✨ Aşk Yüzdesini Hesapla</span></button>
+            <button id="randomPairBtn" type="button" class="w-full sm:w-auto px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 font-semibold text-sm transition-all flex items-center justify-center gap-2"><span>🎲 Rastgele Çift Seç</span></button>
           </div>
         </form>
 
-        <!-- Result Container -->
         <div id="loveResultContainer" class="mt-8 pt-8 border-t border-white/10 hidden">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <!-- Left: Circular Gauge -->
             <div class="lg:col-span-5 flex flex-col items-center text-center">
               <div class="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
                 <svg class="w-full h-full -rotate-90" viewBox="0 0 200 200">
                   <defs>
                     <linearGradient id="loveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#fb7185" />
-                      <stop offset="50%" stop-color="#ec4899" />
-                      <stop offset="100%" stop-color="#a855f7" />
+                      <stop offset="0%" stop-color="#fb7185" /><stop offset="50%" stop-color="#ec4899" /><stop offset="100%" stop-color="#a855f7" />
                     </linearGradient>
                   </defs>
                   <circle cx="100" cy="100" r="82" stroke="currentColor" stroke-width="14" class="text-white/10" fill="transparent" />
-                  <circle
-                    id="loveRingCircle"
-                    cx="100"
-                    cy="100"
-                    r="82"
-                    stroke="url(#loveGrad)"
-                    stroke-width="14"
-                    stroke-linecap="round"
-                    fill="transparent"
-                    stroke-dasharray="515.22"
-                    stroke-dashoffset="515.22"
-                    class="ring-progress"
-                  />
+                  <circle id="loveRingCircle" cx="100" cy="100" r="82" stroke="url(#loveGrad)" stroke-width="14" stroke-linecap="round" fill="transparent" stroke-dasharray="515.22" stroke-dashoffset="515.22" class="ring-progress" />
                 </svg>
                 <div class="absolute inset-0 flex flex-col items-center justify-center">
                   <span id="loveEmojiBadge" class="text-3xl mb-1 animate-pulse-soft">❤️‍🔥</span>
-                  <div class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-rose-300 via-pink-200 to-fuchsia-300 bg-clip-text text-transparent">
-                    %<span id="loveScoreNumber">0</span>
-                  </div>
-                  <span id="loveTierLabel" class="text-xs font-semibold uppercase tracking-widest text-rose-300 mt-1">
-                    Ruh Eşi Enerjisi
-                  </span>
+                  <div class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-rose-300 via-pink-200 to-fuchsia-300 bg-clip-text text-transparent">%<span id="loveScoreNumber">0</span></div>
+                  <span id="loveTierLabel" class="text-xs font-semibold uppercase tracking-widest text-rose-300 mt-1">Ruh Eşi Enerjisi</span>
                 </div>
               </div>
-
               <div id="lovePairTitle" class="mt-3 text-lg sm:text-xl font-bold text-white"></div>
               <p id="loveReadingText" class="mt-2 text-sm text-slate-300 leading-relaxed max-w-md"></p>
             </div>
 
-            <!-- Right: Sub-Metrics & Extras -->
             <div class="lg:col-span-7 space-y-4">
               <div class="bg-slate-900/50 border border-white/10 rounded-2xl p-4 sm:p-5 space-y-3.5">
                 <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  <span>Detaylı İlişki Boyutları</span>
-                  <span>Rastgele Enerji Dağılımı</span>
+                  <span>Detaylı İlişki Boyutları</span><span>Enerji Dağılımı</span>
                 </div>
-
-                <!-- Sub-bars -->
                 <div>
-                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1">
-                    <span>🌹 Romantizm & Çekim</span>
-                    <span id="subRomanceVal" class="font-bold text-rose-300">%0</span>
-                  </div>
-                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden">
-                    <div id="subRomanceBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-rose-500 to-pink-500" style="width: 0%"></div>
-                  </div>
+                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1"><span>🌹 Romantizm & Çekim</span><span id="subRomanceVal" class="font-bold text-rose-300">%0</span></div>
+                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden"><div id="subRomanceBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-rose-500 to-pink-500" style="width: 0%"></div></div>
                 </div>
-
                 <div>
-                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1">
-                    <span>💬 İletişim & Anlayış</span>
-                    <span id="subCommVal" class="font-bold text-fuchsia-300">%0</span>
-                  </div>
-                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden">
-                    <div id="subCommBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500" style="width: 0%"></div>
-                  </div>
+                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1"><span>💬 İletişim & Anlayış</span><span id="subCommVal" class="font-bold text-fuchsia-300">%0</span></div>
+                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden"><div id="subCommBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500" style="width: 0%"></div></div>
                 </div>
-
                 <div>
-                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1">
-                    <span>🔥 Tutku & Heyecan</span>
-                    <span id="subPassionVal" class="font-bold text-amber-300">%0</span>
-                  </div>
-                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden">
-                    <div id="subPassionBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-500" style="width: 0%"></div>
-                  </div>
+                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1"><span>🔥 Tutku & Heyecan</span><span id="subPassionVal" class="font-bold text-amber-300">%0</span></div>
+                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden"><div id="subPassionBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-amber-500 to-rose-500" style="width: 0%"></div></div>
                 </div>
-
                 <div>
-                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1">
-                    <span>🛡️ Güven & Sadakat</span>
-                    <span id="subTrustVal" class="font-bold text-emerald-300">%0</span>
-                  </div>
-                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden">
-                    <div id="subTrustBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500" style="width: 0%"></div>
-                  </div>
+                  <div class="flex justify-between text-xs sm:text-sm font-medium mb-1"><span>🛡️ Güven & Sadakat</span><span id="subTrustVal" class="font-bold text-emerald-300">%0</span></div>
+                  <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden"><div id="subTrustBar" class="bar-fill h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500" style="width: 0%"></div></div>
                 </div>
               </div>
 
-              <!-- Mini Cards Row -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
                   <div class="text-xs text-slate-400">İdeal Buluşma Önerisi</div>
@@ -363,188 +180,84 @@
                 </div>
               </div>
 
-              <!-- Action Buttons -->
               <div class="flex flex-wrap items-center gap-2.5 pt-1">
-                <button
-                  id="rerollLoveBtn"
-                  type="button"
-                  class="px-4 py-2.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-400/30 text-xs sm:text-sm font-semibold text-rose-200 transition-all"
-                >
-                  🔄 Aynı İsimlerle Yeni Rastgele Yüzde
-                </button>
-                <button
-                  id="copyLoveBtn"
-                  type="button"
-                  class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs sm:text-sm font-semibold transition-all"
-                >
-                  📋 Sonucu Kopyala
-                </button>
-                <button
-                  id="analyzeFirstPersonBtn"
-                  type="button"
-                  class="px-4 py-2.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-xs sm:text-sm font-semibold text-indigo-200 transition-all"
-                >
-                  🔮 Bu İsimlerin Kişiliğini Analiz Et ↓
-                </button>
+                <button id="copyLoveBtn" type="button" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs sm:text-sm font-semibold transition-all">📋 Sonucu Kopyala</button>
+                <button id="analyzeFirstPersonBtn" type="button" class="px-4 py-2.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-xs sm:text-sm font-semibold text-indigo-200 transition-all">🔮 1. Kişinin Kişiliğini Analiz Et ↓</button>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Down Indicator -->
       <div class="mt-8 flex flex-col items-center">
-        <a
-          href="#kisilik-analizi"
-          class="group inline-flex flex-col items-center gap-2 text-xs sm:text-sm font-medium text-slate-400 hover:text-rose-300 transition-colors"
-        >
-          <span>Aşağı Kaydır: İsimden Rastgele Kişilik Analizi</span>
-          <span class="w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center group-hover:translate-y-1 transition-transform">
-            ↓
-          </span>
+        <a href="#kisilik-analizi" class="group inline-flex flex-col items-center gap-2 text-xs sm:text-sm font-medium text-slate-400 hover:text-rose-300 transition-colors">
+          <span>Aşağı Kaydır: İsimden Kişilik Analizi</span>
+          <span class="w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center group-hover:translate-y-1 transition-transform">↓</span>
         </a>
       </div>
     </section>
 
-    <!-- SECTION 2: PERSONALITY ANALYSIS ON SCROLL -->
     <section id="kisilik-analizi" class="py-12 sm:py-16 px-4 sm:px-6 max-w-5xl mx-auto border-t border-white/10">
       <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-4">
-          <span>🔮</span>
-          Rastgele Karakter & Aura Çözümleyici
-        </div>
-        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-3">
-          İsimden <span class="font-serif italic bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Kişilik Analizi</span>
-        </h2>
-        <p class="text-sm sm:text-base text-slate-400">
-          Herhangi bir ismi yazın; o isme özel rastgele karakter arketipini, gizli yetenekleri, aura rengini ve 6 boyutlu kişilik profilini keşfedin.
-        </p>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-4"><span>🔮</span> Karakter & Aura Çözümleyici</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-3">İsimden <span class="font-serif italic bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Kişilik Analizi</span></h2>
+        <p class="text-sm sm:text-base text-slate-400">Herhangi bir ismi yazın; o isme özel karakter arketipini, gizli yetenekleri, aura rengini ve 6 boyutlu kişilik profilini keşfedin.</p>
       </div>
 
       <div class="glass-card rounded-3xl p-5 sm:p-8 md:p-10 shadow-2xl">
-        <!-- Quick Name Buttons -->
         <div class="flex flex-wrap items-center justify-center gap-2 mb-6">
           <span class="text-xs text-slate-400 mr-1">Örnek İsim Seç:</span>
-          <button type="button" data-person="Defne" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">
-            Defne
-          </button>
-          <button type="button" data-person="Arda" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">
-            Arda
-          </button>
-          <button type="button" data-person="Yağmur" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">
-            Yağmur
-          </button>
-          <button type="button" data-person="Emre" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">
-            Emre
-          </button>
-          <button type="button" data-person="Ece" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">
-            Ece
-          </button>
+          <button type="button" data-person="Defne" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">Defne</button>
+          <button type="button" data-person="Arda" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">Arda</button>
+          <button type="button" data-person="Yağmur" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">Yağmur</button>
+          <button type="button" data-person="Emre" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">Emre</button>
+          <button type="button" data-person="Ece" class="quick-person-btn text-xs px-3 py-1 rounded-full bg-white/5 hover:bg-indigo-500/20 border border-white/10 hover:border-indigo-400/40 transition-all">Ece</button>
         </div>
 
-        <!-- Personality Input Form -->
         <form id="personaForm" class="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto">
           <div class="relative flex-1">
-            <input
-              id="personaNameInput"
-              type="text"
-              maxlength="35"
-              placeholder="İsim girin (Örn: Defne)"
-              autocomplete="off"
-              class="w-full px-4 py-4 rounded-2xl bg-slate-900/70 border border-white/15 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/30 outline-none text-base font-medium placeholder:text-slate-500 transition-all"
-            />
+            <input id="personaNameInput" type="text" maxlength="35" placeholder="İsim girin (Örn: Defne)" autocomplete="off" class="w-full px-4 py-4 rounded-2xl bg-slate-900/70 border border-white/15 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/30 outline-none text-base font-medium placeholder:text-slate-500 transition-all" />
             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-lg pointer-events-none">🌟</span>
           </div>
-          <button
-            type="submit"
-            class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-600 hover:from-indigo-400 hover:to-fuchsia-500 text-white font-bold text-base shadow-xl shadow-indigo-500/25 active:scale-[0.99] transition-all whitespace-nowrap"
-          >
-            🔮 Kişiliği Analiz Et
-          </button>
+          <button type="submit" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-600 hover:from-indigo-400 hover:to-fuchsia-500 text-white font-bold text-base shadow-xl shadow-indigo-500/25 active:scale-[0.99] transition-all whitespace-nowrap">🔮 Kişiliği Analiz Et</button>
         </form>
 
-        <!-- Personality Result Area -->
         <div id="personaResultContainer" class="mt-8 pt-8 border-t border-white/10">
-          <!-- Top Banner: Archetype + Aura -->
-          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-indigo-950/80 via-slate-900/80 to-fuchsia-950/80 border border-indigo-400/25 mb-6">
+          <div id="personaBanner" class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-indigo-950/80 via-slate-900/80 to-fuchsia-950/80 border border-indigo-400/25 mb-6">
             <div class="flex items-center gap-4">
-              <div id="personaAvatarIcon" class="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-3xl shrink-0">
-                🦁
-              </div>
+              <div id="personaAvatarIcon" class="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-3xl shrink-0">🦁</div>
               <div>
                 <div class="flex flex-wrap items-center gap-2">
                   <span id="personaDisplayName" class="text-xl sm:text-2xl font-extrabold text-white">Defne</span>
-                  <span id="personaAuraBadge" class="text-xs font-semibold px-3 py-1 rounded-full bg-violet-500/25 border border-violet-400/40 text-violet-200">
-                    Mor Kristal Aura
-                  </span>
+                  <span id="personaAuraBadge" class="text-xs font-semibold px-3 py-1 rounded-full bg-violet-500/25 border border-violet-400/40 text-violet-200">Mor Kristal Aura</span>
                 </div>
-                <div id="personaArchetypeTitle" class="text-sm sm:text-base font-semibold text-indigo-300 mt-0.5">
-                  Vizyoner Hayalperest & Doğal Lider
-                </div>
+                <div id="personaArchetypeTitle" class="text-sm sm:text-base font-semibold text-indigo-300 mt-0.5">Vizyoner Hayalperest & Doğal Lider</div>
               </div>
             </div>
-
             <div class="flex flex-wrap gap-2 w-full md:w-auto">
-              <button
-                id="rerollPersonaBtn"
-                type="button"
-                class="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-indigo-500/25 hover:bg-indigo-500/35 border border-indigo-400/30 text-xs sm:text-sm font-semibold text-indigo-200 transition-all"
-              >
-                🎲 Yeni Rastgele Analiz
-              </button>
-              <button
-                id="copyPersonaBtn"
-                type="button"
-                class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs sm:text-sm font-semibold transition-all"
-              >
-                📋 Kopyala
-              </button>
+              <button id="copyPersonaBtn" type="button" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs sm:text-sm font-semibold transition-all">📋 Kopyala</button>
             </div>
           </div>
 
-          <!-- Grid: 6 Traits + Deep Story & Highlights -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- 6 Trait Bars -->
             <div class="lg:col-span-6 bg-slate-900/50 border border-white/10 rounded-2xl p-5 space-y-4">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Karakter Özellik Yüzdeleri
-              </h3>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Karakter Özellik Yüzdeleri</h3>
               <div id="personaTraitsList" class="space-y-3.5"></div>
             </div>
-
-            <!-- Story & Attribute Badges -->
             <div class="lg:col-span-6 flex flex-col justify-between gap-4">
               <div class="bg-slate-900/50 border border-white/10 rounded-2xl p-5">
-                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-                  Kişilik Özeti & Enerji Yorumu
-                </h3>
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Kişilik Özeti & Enerji Yorumu</h3>
                 <p id="personaStoryText" class="text-sm sm:text-base text-slate-200 leading-relaxed"></p>
-
-                <!-- Strengths Chips -->
                 <div class="mt-4 pt-4 border-t border-white/10">
                   <div class="text-xs text-slate-400 mb-2">Öne Çıkan Güçlü Yönler:</div>
                   <div id="personaStrengthsChips" class="flex flex-wrap gap-2"></div>
                 </div>
               </div>
-
-              <!-- 4 Mini Info Boxes -->
               <div class="grid grid-cols-2 gap-3">
-                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                  <div class="text-xs text-slate-400">Gizli Yetenek</div>
-                  <div id="personaHiddenTalent" class="text-sm font-semibold mt-0.5 text-indigo-200"></div>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                  <div class="text-xs text-slate-400">Sosyal Batarya</div>
-                  <div id="personaSocialStyle" class="text-sm font-semibold mt-0.5 text-emerald-200"></div>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                  <div class="text-xs text-slate-400">Element & Gezegen</div>
-                  <div id="personaElement" class="text-sm font-semibold mt-0.5 text-amber-200"></div>
-                </div>
-                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10">
-                  <div class="text-xs text-slate-400">Şanslı Sayı & Gün</div>
-                  <div id="personaLuckyInfo" class="text-sm font-semibold mt-0.5 text-rose-200"></div>
-                </div>
+                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><div class="text-xs text-slate-400">Gizli Yetenek</div><div id="personaHiddenTalent" class="text-sm font-semibold mt-0.5 text-indigo-200"></div></div>
+                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><div class="text-xs text-slate-400">Sosyal Batarya</div><div id="personaSocialStyle" class="text-sm font-semibold mt-0.5 text-emerald-200"></div></div>
+                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><div class="text-xs text-slate-400">Element & Gezegen</div><div id="personaElement" class="text-sm font-semibold mt-0.5 text-amber-200"></div></div>
+                <div class="p-3.5 rounded-2xl bg-white/5 border border-white/10"><div class="text-xs text-slate-400">Şanslı Sayı & Gün</div><div id="personaLuckyInfo" class="text-sm font-semibold mt-0.5 text-rose-200"></div></div>
               </div>
             </div>
           </div>
@@ -552,76 +265,44 @@
       </div>
     </section>
 
-    <!-- SECTION 3: RECENT HISTORY -->
     <section id="gecmis-bolumu" class="py-10 px-4 sm:px-6 max-w-5xl mx-auto border-t border-white/10">
       <div class="flex items-center justify-between mb-4">
         <div>
           <h3 class="text-lg sm:text-xl font-bold">📜 Son Yapılan Analizler</h3>
-          <p class="text-xs text-slate-400">Bu oturumda yaptığınız son aşk ve kişilik testleri</p>
+          <p class="text-xs text-slate-400">Son yaptığınız aşk ve kişilik testleri</p>
         </div>
-        <button
-          id="clearHistoryBtn"
-          type="button"
-          class="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 border border-white/10 text-xs font-medium text-slate-300 hover:text-rose-200 transition-colors"
-        >
-          Temizle
-        </button>
+        <button id="clearHistoryBtn" type="button" class="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-rose-500/20 border border-white/10 text-xs font-medium text-slate-300 hover:text-rose-200 transition-colors">Temizle</button>
       </div>
       <div id="historyGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
     </section>
   </main>
 
   <footer class="border-t border-white/10 py-6 px-4 text-center text-xs text-slate-500">
-    Aşk Uyumu & İsimden Kişilik Analizi • Eğlence amaçlı rastgele analiz üreticisidir.
+    Aşk Uyumu & İsimden Kişilik Analizi • Eğlence amaçlı analiz üreticisidir.
   </footer>
 
   <script>
     (function () {
-      // Data pools for rich Turkish outputs
       const SAMPLE_NAMES_A = ['Elif', 'Zeynep', 'Defne', 'Selin', 'Ece', 'Yağmur', 'Aslı', 'Duru', 'Melis', 'Azra'];
       const SAMPLE_NAMES_B = ['Can', 'Mert', 'Burak', 'Kaan', 'Arda', 'Emre', 'Kerem', 'Barış', 'Tuna', 'Onur'];
 
       const LOVE_TIERS = [
-        {
-          min: 85,
-          label: 'Kozmik Ruh Eşi 🔥',
-          emoji: '❤️‍🔥',
-          comments: [
-            'Aranızdaki çekim adeta yıldızlarda yazılmış! Birbirinizin cümlelerini tamamlayan, hem tutkulu hem de sarsılmaz bir bağınız var.',
-            'Muazzam bir frekans uyumu! Bir araya geldiğinizde zamanın nasıl geçtiğini unutuyor, etrafınıza pozitif enerji saçıyorsunuz.',
-            'Kalpleriniz aynı ritimde atıyor. Hem en yakın arkadaş hem de tutkulu birer aşık olma potansiyeliniz zirvede!'
-          ]
-        },
-        {
-          min: 70,
-          label: 'Yüksek Romantik Uyum 💖',
-          emoji: '💘',
-          comments: [
-            'Çok tatlı ve dengeli bir enerjiniz var! Küçük farklılıklarınız bile ilişkinize heyecan ve renk katıyor.',
-            'Birbirinizi hem güldürebilen hem de zor anlarda destekleyen harika bir ikilisiniz. Geleceği parlak bir uyum!',
-            'Bakışlarınızla bile anlaşabildiğiniz sıcak bir kimya var. Birlikte yeni maceralara atılmak için harika bir eşleşme.'
-          ]
-        },
-        {
-          min: 50,
-          label: 'Heyecanlı & Sürprizli Çift ✨',
-          emoji: '💞',
-          comments: [
-            'Zıt kutuplar birbirini çeker! Farklı karakterleriniz sayesinde birbirinize yepyeni pencereler açıyorsunuz.',
-            'Biraz inatlaşma, bolca kahkaha! İletişimi güçlü tuttuğunuzda aranızdaki kıvılcım büyük bir aşka dönüşebilir.',
-            'Sürprizlerle dolu bir dinamik. Birbirinizi tanıdıkça uyumunuzun her geçen gün arttığını göreceksiniz.'
-          ]
-        },
-        {
-          min: 0,
-          label: 'Gizemli & Macera Dolu 🌶️',
-          emoji: '💫',
-          comments: [
-            'Fırtınalı ama bir o kadar da merak uyandırıcı! Birbirinizin dilini çözmek biraz zaman alsa da asla sıkıcı olmayacağı kesin.',
-            'İki güçlü ve bağımsız karakterin karşılaşması! Ortak noktada buluştuğunuzda herkesi şaşırtacak bir ikili olabilirsiniz.',
-            'Kuralları yıkan bir eşleşme! Sabır ve mizahla yaklaşırsanız beklenmedik derecede eğlenceli bir bağ kurabilirsiniz.'
-          ]
-        }
+        { min: 85, label: 'Kozmik Ruh Eşi 🔥', emoji: '❤️‍🔥', comments: [
+          'Aranızdaki çekim adeta yıldızlarda yazılmış! Birbirinizin cümlelerini tamamlayan, hem tutkulu hem de sarsılmaz bir bağınız var.',
+          'Muazzam bir frekans uyumu! Bir araya geldiğinizde zamanın nasıl geçtiğini unutuyor, etrafınıza pozitif enerji saçıyorsunuz.',
+          'Kalpleriniz aynı ritimde atıyor. Hem en yakın arkadaş hem de tutkulu birer aşık olma potansiyeliniz zirvede!'] },
+        { min: 70, label: 'Yüksek Romantik Uyum 💖', emoji: '💘', comments: [
+          'Çok tatlı ve dengeli bir enerjiniz var! Küçük farklılıklarınız bile ilişkinize heyecan ve renk katıyor.',
+          'Birbirinizi hem güldürebilen hem de zor anlarda destekleyen harika bir ikilisiniz. Geleceği parlak bir uyum!',
+          'Bakışlarınızla bile anlaşabildiğiniz sıcak bir kimya var. Birlikte yeni maceralara atılmak için harika bir eşleşme.'] },
+        { min: 50, label: 'Heyecanlı & Sürprizli Çift ✨', emoji: '💞', comments: [
+          'Zıt kutuplar birbirini çeker! Farklı karakterleriniz sayesinde birbirinize yepyeni pencereler açıyorsunuz.',
+          'Biraz inatlaşma, bolca kahkaha! İletişimi güçlü tuttuğunuzda aranızdaki kıvılcım büyük bir aşka dönüşebilir.',
+          'Sürprizlerle dolu bir dinamik. Birbirinizi tanıdıkça uyumunuzun her geçen gün arttığını göreceksiniz.'] },
+        { min: 0, label: 'Gizemli & Macera Dolu 🌶️', emoji: '💫', comments: [
+          'Fırtınalı ama bir o kadar da merak uyandırıcı! Birbirinizin dilini çözmek biraz zaman alsa da asla sıkıcı olmayacağı kesin.',
+          'İki güçlü ve bağımsız karakterin karşılaşması! Ortak noktada buluştuğunuzda herkesi şaşırtacak bir ikili olabilirsiniz.',
+          'Kuralları yıkan bir eşleşme! Sabır ve mizahla yaklaşırsanız beklenmedik derecede eğlenceli bir bağ kurabilirsiniz.'] }
       ];
 
       const DATE_IDEAS = [
@@ -643,49 +324,21 @@
       ];
 
       const ARCHETYPES = [
-        {
-          icon: '🦁',
-          title: 'Karizmatik Öncü & Cesur Ruh',
-          aura: 'Altın Güneş Aurası',
-          story: 'Girdiği her ortamda enerjisiyle hemen fark edilen, kararlı ve sıcakkanlı bir karaktere sahip. Zorluklar karşısında geri adım atmak yerine yaratıcı çözümler üretmeyi seviyor ve sevdiklerine karşı son derece koruyucu davranıyor.'
-        },
-        {
-          icon: '🦉',
-          title: 'Derin Sezgili & Bilge Gözlemci',
-          aura: 'Gece Mavisi İndigo Aura',
-          story: 'İnsanların söylemediklerini bile gözlerinden anlayabilen güçlü bir empati ve sezgi yeteneği var. Yüzeysel sohbetlerden ziyade derin anlam taşıyan fikirlere, sanata ve samimi dostluklara değer veriyor.'
-        },
-        {
-          icon: '🦋',
-          title: 'Özgür Ruhlu & İlham Veren Yaratıcı',
-          aura: 'Mor Kristal Aura',
-          story: 'Rutinlere sığmayan, hayal gücü yüksek ve yenilikçi bir enerjisi var. Orijinal fikirleri ve neşeli mizah anlayışıyla çevresindeki insanların modunu anında yükselten bir ilham kaynağı.'
-        },
-        {
-          icon: '🦊',
-          title: 'Pratik Zeka & Stratejik Kaşif',
-          aura: 'Zümrüt Yeşili Aura',
-          story: 'Hızlı düşünen, analitik zekası ile mizahı birleştiren çok yönlü bir kişilik. Yeni yerler keşfetmekten, farklı kültürleri deneyimlemekten ve spontane gelişen maceralardan büyük keyif alıyor.'
-        },
-        {
-          icon: '🐬',
-          title: 'Sosyal Mıknatıs & Huzur Elçisi',
-          aura: 'Turkuaz Okyanus Aurası',
-          story: 'Samimiyeti ve içten gülüşüyle herkesin yanında kendini rahat hissettiği özel bir insan. Kriz anlarında bile soğukkanlılığını koruyup ortama denge ve neşe getirme konusunda doğuştan yetenekli.'
-        },
-        {
-          icon: '🦅',
-          title: 'Vizyoner Mimar & Bağımsız Karakter',
-          aura: 'Kızıl Yakut Aura',
-          story: 'Kendi yolunu çizen, standartların ötesinde hedefleri olan özgün bir ruh. Özgürlüğüne düşkün olduğu kadar değer verdiği insanlara karşı da bir o kadar vefalı ve net bir duruşa sahip.'
-        }
+        { icon: '🦁', title: 'Karizmatik Öncü & Cesur Ruh', aura: 'Altın Güneş Aurası',
+          story: 'Girdiği her ortamda enerjisiyle hemen fark edilen, kararlı ve sıcakkanlı bir karaktere sahip. Zorluklar karşısında geri adım atmak yerine yaratıcı çözümler üretmeyi seviyor ve sevdiklerine karşı son derece koruyucu davranıyor.' },
+        { icon: '🦉', title: 'Derin Sezgili & Bilge Gözlemci', aura: 'Gece Mavisi İndigo Aura',
+          story: 'İnsanların söylemediklerini bile gözlerinden anlayabilen güçlü bir empati ve sezgi yeteneği var. Yüzeysel sohbetlerden ziyade derin anlam taşıyan fikirlere, sanata ve samimi dostluklara değer veriyor.' },
+        { icon: '🦋', title: 'Özgür Ruhlu & İlham Veren Yaratıcı', aura: 'Mor Kristal Aura',
+          story: 'Rutinlere sığmayan, hayal gücü yüksek ve yenilikçi bir enerjisi var. Orijinal fikirleri ve neşeli mizah anlayışıyla çevresindeki insanların modunu anında yükselten bir ilham kaynağı.' },
+        { icon: '🦊', title: 'Pratik Zeka & Stratejik Kaşif', aura: 'Zümrüt Yeşili Aura',
+          story: 'Hızlı düşünen, analitik zekası ile mizahı birleştiren çok yönlü bir kişilik. Yeni yerler keşfetmekten, farklı kültürleri deneyimlemekten ve spontane gelişen maceralardan büyük keyif alıyor.' },
+        { icon: '🐬', title: 'Sosyal Mıknatıs & Huzur Elçisi', aura: 'Turkuaz Okyanus Aurası',
+          story: 'Samimiyeti ve içten gülüşüyle herkesin yanında kendini rahat hissettiği özel bir insan. Kriz anlarında bile soğukkanlılığını koruyup ortama denge ve neşe getirme konusunda doğuştan yetenekli.' },
+        { icon: '🦅', title: 'Vizyoner Mimar & Bağımsız Karakter', aura: 'Kızıl Yakut Aura',
+          story: 'Kendi yolunu çizen, standartların ötesinde hedefleri olan özgün bir ruh. Özgürlüğüne düşkün olduğu kadar değer verdiği insanlara karşı da bir o kadar vefalı ve net bir duruşa sahip.' }
       ];
 
-      const STRENGTH_POOL = [
-        'Yüksek Empati', 'Kriz Yönetimi', 'Keskin Mizah', 'Doğal Liderlik',
-        'Yaratıcı Vizyon', 'Güçlü Sezgi', 'İkna Kabiliyeti', 'Sarsılmaz Sadakat',
-        'Detaycı Zeka', 'Pozitif Enerji', 'Estetik Bakış', 'Cesur Kararlar'
-      ];
+      const STRENGTH_POOL = ['Yüksek Empati', 'Kriz Yönetimi', 'Keskin Mizah', 'Doğal Liderlik', 'Yaratıcı Vizyon', 'Güçlü Sezgi', 'İkna Kabiliyeti', 'Sarsılmaz Sadakat', 'Detaycı Zeka', 'Pozitif Enerji', 'Estetik Bakış', 'Cesur Kararlar'];
 
       const HIDDEN_TALENTS = [
         'İnsanların niyetini ilk 10 saniyede çözmek',
@@ -703,56 +356,68 @@
         'Gizemli Çekim: Az ve öz konuşup derin iz bırakan'
       ];
 
-      const ELEMENTS = [
-        '🔥 Ateş • Güneş Etkisi',
-        '💧 Su • Ay & Neptün Etkisi',
-        '🌬️ Hava • Merkür Etkisi',
-        '🌿 Toprak • Venüs Etkisi'
-      ];
-
+      const ELEMENTS = ['🔥 Ateş • Güneş Etkisi', '💧 Su • Ay & Neptün Etkisi', '🌬️ Hava • Merkür Etkisi', '🌿 Toprak • Venüs Etkisi'];
       const DAYS = ['Salı', 'Çarşamba', 'Cuma', 'Cumartesi', 'Pazar'];
+      const HISTORY_KEY = 'ask_kisilik_history_v1';
 
-      // State
       let historyItems = [];
       let lastLoveResult = null;
       let lastPersonaResult = null;
 
-      // Utility: random integer inclusive
-      function randInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+      // ---- Seed'li (deterministik) rastgele sayı üreteci ----
+      // Aynı seed -> her zaman aynı sonuç dizisi.
+      function xmur3(str) {
+        let h = 1779033703 ^ str.length;
+        for (let i = 0; i < str.length; i++) {
+          h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+          h = (h << 13) | (h >>> 19);
+        }
+        return function () {
+          h = Math.imul(h ^ (h >>> 16), 2246822507);
+          h = Math.imul(h ^ (h >>> 13), 3266489909);
+          return (h ^= h >>> 16) >>> 0;
+        };
       }
-
-      function pickRandom(arr) {
-        return arr[Math.floor(Math.random() * arr.length)];
+      function mulberry32(a) {
+        return function () {
+          a |= 0; a = (a + 0x6D2B79F5) | 0;
+          let t = Math.imul(a ^ (a >>> 15), 1 | a);
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
       }
+      let rng = Math.random;
+      function seedFrom(str) { rng = mulberry32(xmur3(str)()); }
 
+      function randInt(min, max) { return Math.floor(rng() * (max - min + 1)) + min; }
+      function pickRandom(arr) { return arr[Math.floor(rng() * arr.length)]; }
       function pickMultiple(arr, count) {
         const copy = arr.slice();
         const out = [];
         while (out.length < count && copy.length > 0) {
-          const idx = Math.floor(Math.random() * copy.length);
-          out.push(copy.splice(idx, 1)[0]);
+          out.push(copy.splice(Math.floor(rng() * copy.length), 1)[0]);
         }
         return out;
       }
+      // Sadece boş isim / rastgele çift için gerçek rastgelelik
+      function pickAny(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
       function formatName(str) {
         const cleaned = (str || '').trim().replace(/\s+/g, ' ');
         if (!cleaned) return '';
-        return cleaned
-          .split(' ')
-          .map(w => w.charAt(0).toLocaleUpperCase('tr-TR') + w.slice(1).toLocaleLowerCase('tr-TR'))
-          .join(' ');
+        return cleaned.split(' ').map(w => w.charAt(0).toLocaleUpperCase('tr-TR') + w.slice(1).toLocaleLowerCase('tr-TR')).join(' ');
+      }
+      function nameKey(formatted) { return formatted.toLocaleLowerCase('tr-TR'); }
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
       }
 
-      // Toast helper
       let toastTimer = null;
       function showToast(message, icon) {
         const box = document.getElementById('toastBox');
-        const txt = document.getElementById('toastText');
-        const ic = document.getElementById('toastIcon');
-        txt.textContent = message;
-        ic.textContent = icon || '✨';
+        document.getElementById('toastText').textContent = message;
+        document.getElementById('toastIcon').textContent = icon || '✨';
         box.classList.remove('translate-y-24', 'opacity-0');
         box.classList.add('translate-y-0', 'opacity-100');
         if (toastTimer) clearTimeout(toastTimer);
@@ -762,7 +427,6 @@
         }, 2800);
       }
 
-      // Copy helper with fallback
       function copyTextToClipboard(text, successMsg) {
         const fallbackCopy = () => {
           const ta = document.createElement('textarea');
@@ -771,34 +435,25 @@
           ta.style.opacity = '0';
           document.body.appendChild(ta);
           ta.select();
-          try {
-            document.execCommand('copy');
-            showToast(successMsg, '📋');
-          } catch (err) {
-            showToast('Kopyalama tamamlandı', '✨');
-          }
+          let ok = false;
+          try { ok = document.execCommand('copy'); } catch (err) {}
           document.body.removeChild(ta);
+          showToast(ok ? successMsg : 'Kopyalama başarısız oldu', ok ? '📋' : '⚠️');
         };
-
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(() => {
-            showToast(successMsg, '📋');
-          }).catch(fallbackCopy);
+          navigator.clipboard.writeText(text).then(() => showToast(successMsg, '📋')).catch(fallbackCopy);
         } else {
           fallbackCopy();
         }
       }
 
-      // Floating Heart / Sparkle Particle Burst
+      // ---- Parçacık efekti ----
       const canvas = document.getElementById('fxCanvas');
       const ctx = canvas.getContext('2d');
       let particles = [];
       let animFrameId = null;
 
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+      function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
 
@@ -809,38 +464,26 @@
         const colors = type === 'love'
           ? ['#fb7185', '#f43f5e', '#ec4899', '#e879f9', '#fda4af']
           : ['#818cf8', '#a78bfa', '#c084fc', '#38bdf8', '#f472b6'];
-
         for (let i = 0; i < count; i++) {
           const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
           const speed = 2.5 + Math.random() * 5.5;
           particles.push({
-            x: cx,
-            y: cy,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed - 2,
-            size: 6 + Math.random() * 8,
-            alpha: 1,
-            color: pickRandom(colors),
+            x: cx, y: cy,
+            vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 2,
+            size: 6 + Math.random() * 8, alpha: 1,
+            color: colors[Math.floor(Math.random() * colors.length)],
             isHeart: type === 'love' && Math.random() > 0.25
           });
         }
-        if (!animFrameId) {
-          animateParticles();
-        }
+        if (!animFrameId) animateParticles();
       }
 
       function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let i = particles.length - 1; i >= 0; i--) {
           const p = particles[i];
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.12;
-          p.alpha -= 0.018;
-          if (p.alpha <= 0) {
-            particles.splice(i, 1);
-            continue;
-          }
+          p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.alpha -= 0.018;
+          if (p.alpha <= 0) { particles.splice(i, 1); continue; }
           ctx.save();
           ctx.globalAlpha = Math.max(0, p.alpha);
           ctx.fillStyle = p.color;
@@ -862,62 +505,59 @@
         }
       }
 
-      // Generate Random Love Percentage Result
-      function calculateLove(rawName1, rawName2) {
-        const name1 = formatName(rawName1) || pickRandom(SAMPLE_NAMES_A);
-        const name2 = formatName(rawName2) || pickRandom(SAMPLE_NAMES_B);
+      // Bar genişliğini 0'dan hedefe animasyonla ayarla
+      function setBar(el, pct) {
+        el.style.transition = 'none';
+        el.style.width = '0%';
+        void el.offsetWidth;
+        el.style.transition = '';
+        el.style.width = pct + '%';
+      }
 
+      // ---- Aşk uyumu ----
+      function calculateLove(rawName1, rawName2, record) {
+        const name1 = formatName(rawName1) || pickAny(SAMPLE_NAMES_A);
+        const name2 = formatName(rawName2) || pickAny(SAMPLE_NAMES_B);
         document.getElementById('loveName1').value = name1;
         document.getElementById('loveName2').value = name2;
 
-        // Weighted random between 42% and 100% for fun & exciting results (with full randomness)
+        // İsim sırası fark etmesin: A&B ile B&A aynı sonucu versin
+        const keys = [nameKey(name1), nameKey(name2)].sort();
+        seedFrom('love|' + keys[0] + '|' + keys[1]);
+
         const mainScore = randInt(42, 100);
-        const romance = Math.min(100, Math.max(35, mainScore + randInt(-14, 14)));
-        const comm = Math.min(100, Math.max(35, mainScore + randInt(-16, 15)));
-        const passion = Math.min(100, Math.max(40, mainScore + randInt(-12, 16)));
-        const trust = Math.min(100, Math.max(38, mainScore + randInt(-15, 14)));
+        const clamp = (v, lo) => Math.min(100, Math.max(lo, v));
+        const romance = clamp(mainScore + randInt(-14, 14), 35);
+        const comm = clamp(mainScore + randInt(-16, 15), 35);
+        const passion = clamp(mainScore + randInt(-12, 16), 40);
+        const trust = clamp(mainScore + randInt(-15, 14), 38);
 
         const tier = LOVE_TIERS.find(t => mainScore >= t.min) || LOVE_TIERS[LOVE_TIERS.length - 1];
-        const comment = pickRandom(tier.comments);
-        const dateIdea = pickRandom(DATE_IDEAS);
-        const vibeSymbol = pickRandom(VIBE_SYMBOLS);
-
         lastLoveResult = {
-          name1,
-          name2,
-          mainScore,
-          romance,
-          comm,
-          passion,
-          trust,
-          tierLabel: tier.label,
-          emoji: tier.emoji,
-          comment,
-          dateIdea,
-          vibeSymbol
+          name1, name2, mainScore, romance, comm, passion, trust,
+          tierLabel: tier.label, emoji: tier.emoji,
+          comment: pickRandom(tier.comments),
+          dateIdea: pickRandom(DATE_IDEAS),
+          vibeSymbol: pickRandom(VIBE_SYMBOLS)
         };
 
         renderLoveResult(lastLoveResult);
-        addHistoryItem({
-          type: 'love',
-          title: `${name1} & ${name2}`,
-          badge: `%${mainScore} Aşk Uyumu`,
-          subtitle: tier.label
-        });
-        spawnBurst('love');
+        if (record !== false) {
+          addHistoryItem({ type: 'love', title: `${name1} & ${name2}`, badge: `%${mainScore} Aşk Uyumu`, subtitle: tier.label });
+          spawnBurst('love');
+        }
       }
 
       function renderLoveResult(res) {
-        const container = document.getElementById('loveResultContainer');
-        container.classList.remove('hidden');
+        document.getElementById('loveResultContainer').classList.remove('hidden');
 
         const circumference = 515.22;
-        const offset = circumference - (res.mainScore / 100) * circumference;
         const ring = document.getElementById('loveRingCircle');
+        ring.style.transition = 'none';
         ring.style.strokeDashoffset = circumference;
-        setTimeout(() => {
-          ring.style.strokeDashoffset = offset;
-        }, 30);
+        void ring.getBoundingClientRect();
+        ring.style.transition = '';
+        ring.style.strokeDashoffset = circumference - (res.mainScore / 100) * circumference;
 
         document.getElementById('loveEmojiBadge').textContent = res.emoji;
         document.getElementById('loveScoreNumber').textContent = res.mainScore;
@@ -925,26 +565,20 @@
         document.getElementById('lovePairTitle').textContent = `${res.name1} ❤️ ${res.name2}`;
         document.getElementById('loveReadingText').textContent = res.comment;
 
-        document.getElementById('subRomanceVal').textContent = `%${res.romance}`;
-        document.getElementById('subRomanceBar').style.width = `${res.romance}%`;
-
-        document.getElementById('subCommVal').textContent = `%${res.comm}`;
-        document.getElementById('subCommBar').style.width = `${res.comm}%`;
-
-        document.getElementById('subPassionVal').textContent = `%${res.passion}`;
-        document.getElementById('subPassionBar').style.width = `${res.passion}%`;
-
-        document.getElementById('subTrustVal').textContent = `%${res.trust}`;
-        document.getElementById('subTrustBar').style.width = `${res.trust}%`;
+        [['Romance', res.romance], ['Comm', res.comm], ['Passion', res.passion], ['Trust', res.trust]].forEach(([k, v]) => {
+          document.getElementById('sub' + k + 'Val').textContent = `%${v}`;
+          setBar(document.getElementById('sub' + k + 'Bar'), v);
+        });
 
         document.getElementById('loveDateIdea').textContent = res.dateIdea;
         document.getElementById('loveVibeSymbol').textContent = res.vibeSymbol;
       }
 
-      // Generate Random Personality Analysis Result
-      function calculatePersona(rawName, triggerParticles) {
-        const name = formatName(rawName) || pickRandom(SAMPLE_NAMES_A);
+      // ---- Kişilik analizi ----
+      function calculatePersona(rawName, triggerParticles, record) {
+        const name = formatName(rawName) || pickAny(SAMPLE_NAMES_A);
         document.getElementById('personaNameInput').value = name;
+        seedFrom('persona|' + nameKey(name));
 
         const arch = pickRandom(ARCHETYPES);
         const traits = [
@@ -955,7 +589,6 @@
           { label: '🔮 Sezgi & Altıncı His', val: randInt(65, 99), color: 'from-violet-500 to-purple-500' },
           { label: '😄 Mizah & Pozitif Enerji', val: randInt(63, 99), color: 'from-emerald-400 to-cyan-500' }
         ];
-
         const strengths = pickMultiple(STRENGTH_POOL, 4);
         const hiddenTalent = pickRandom(HIDDEN_TALENTS);
         const socialStyle = pickRandom(SOCIAL_STYLES);
@@ -963,28 +596,13 @@
         const luckyNumber = randInt(3, 99);
         const luckyDay = pickRandom(DAYS);
 
-        lastPersonaResult = {
-          name,
-          arch,
-          traits,
-          strengths,
-          hiddenTalent,
-          socialStyle,
-          element,
-          luckyInfo: `${luckyNumber} • ${luckyDay}`
-        };
-
+        lastPersonaResult = { name, arch, traits, strengths, hiddenTalent, socialStyle, element, luckyInfo: `${luckyNumber} • ${luckyDay}` };
         renderPersonaResult(lastPersonaResult);
-        addHistoryItem({
-          type: 'persona',
-          title: name,
-          badge: arch.aura,
-          subtitle: arch.title
-        });
 
-        if (triggerParticles) {
-          spawnBurst('persona');
+        if (record !== false) {
+          addHistoryItem({ type: 'persona', title: name, badge: arch.aura, subtitle: arch.title });
         }
+        if (triggerParticles) spawnBurst('persona');
       }
 
       function renderPersonaResult(res) {
@@ -992,27 +610,24 @@
         document.getElementById('personaDisplayName').textContent = res.name;
         document.getElementById('personaAuraBadge').textContent = res.arch.aura;
         document.getElementById('personaArchetypeTitle').textContent = res.arch.title;
-        document.getElementById('personaStoryText').textContent = `${res.name}; ${res.arch.story.charAt(0).toLocaleLowerCase('tr-TR')}${res.arch.story.slice(1)}`;
+        document.getElementById('personaStoryText').textContent =
+          `${res.name}; ${res.arch.story.charAt(0).toLocaleLowerCase('tr-TR')}${res.arch.story.slice(1)}`;
 
         const traitsList = document.getElementById('personaTraitsList');
         traitsList.innerHTML = res.traits.map(t => `
           <div>
             <div class="flex justify-between text-xs sm:text-sm font-medium mb-1">
-              <span>${t.label}</span>
-              <span class="font-bold text-indigo-300">%${t.val}</span>
+              <span>${t.label}</span><span class="font-bold text-indigo-300">%${t.val}</span>
             </div>
             <div class="h-2.5 w-full rounded-full bg-white/10 overflow-hidden">
-              <div class="bar-fill h-full rounded-full bg-gradient-to-r ${t.color}" style="width: ${t.val}%"></div>
+              <div class="bar-fill h-full rounded-full bg-gradient-to-r ${t.color}" style="width: 0%" data-w="${t.val}"></div>
             </div>
-          </div>
-        `).join('');
+          </div>`).join('');
+        void traitsList.offsetWidth;
+        traitsList.querySelectorAll('[data-w]').forEach(el => { el.style.width = el.getAttribute('data-w') + '%'; });
 
-        const chipsContainer = document.getElementById('personaStrengthsChips');
-        chipsContainer.innerHTML = res.strengths.map(s => `
-          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200">
-            ✦ ${s}
-          </span>
-        `).join('');
+        document.getElementById('personaStrengthsChips').innerHTML = res.strengths.map(s =>
+          `<span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200">✦ ${s}</span>`).join('');
 
         document.getElementById('personaHiddenTalent').textContent = res.hiddenTalent;
         document.getElementById('personaSocialStyle').textContent = res.socialStyle;
@@ -1020,74 +635,54 @@
         document.getElementById('personaLuckyInfo').textContent = res.luckyInfo;
       }
 
-      // History Management
+      // ---- Geçmiş ----
       function loadHistory() {
         try {
-          const saved = localStorage.getItem('ask_kisilik_history_v1');
-          if (saved) {
-            historyItems = JSON.parse(saved);
-          }
-        } catch (e) {
-          historyItems = [];
-        }
+          const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+          historyItems = Array.isArray(saved) ? saved.slice(0, 6) : [];
+        } catch (e) { historyItems = []; }
         renderHistory();
       }
 
       function addHistoryItem(item) {
-        historyItems.unshift({
-          ...item,
-          time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })
-        });
-        if (historyItems.length > 6) {
-          historyItems = historyItems.slice(0, 6);
-        }
-        try {
-          localStorage.setItem('ask_kisilik_history_v1', JSON.stringify(historyItems));
-        } catch (e) {}
+        // Aynı analiz tekrar edilirse listede çoğalmasın, en üste taşınsın
+        historyItems = historyItems.filter(h => !(h.type === item.type && h.title === item.title));
+        historyItems.unshift({ ...item, time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) });
+        historyItems = historyItems.slice(0, 6);
+        try { localStorage.setItem(HISTORY_KEY, JSON.stringify(historyItems)); } catch (e) {}
         renderHistory();
       }
 
       function renderHistory() {
         const countEl = document.getElementById('navHistoryCount');
         if (countEl) countEl.textContent = historyItems.length;
-
         const grid = document.getElementById('historyGrid');
         if (historyItems.length === 0) {
-          grid.innerHTML = `
-            <div class="col-span-full text-center py-6 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-400">
-              Henüz kayıtlı bir analiz yok. Yukarıdan bir aşk uyumu veya kişilik analizi başlatın!
-            </div>
-          `;
+          grid.innerHTML = `<div class="col-span-full text-center py-6 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-400">Henüz kayıtlı bir analiz yok. Yukarıdan bir aşk uyumu veya kişilik analizi başlatın!</div>`;
           return;
         }
-
         grid.innerHTML = historyItems.map(item => `
           <div class="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between gap-3">
             <div class="min-w-0">
               <div class="flex items-center gap-2">
                 <span>${item.type === 'love' ? '💘' : '🔮'}</span>
-                <span class="font-bold text-sm truncate">${item.title}</span>
+                <span class="font-bold text-sm truncate">${escapeHtml(item.title)}</span>
               </div>
-              <div class="text-xs text-slate-400 truncate mt-0.5">${item.subtitle}</div>
+              <div class="text-xs text-slate-400 truncate mt-0.5">${escapeHtml(item.subtitle)}</div>
             </div>
             <div class="text-right shrink-0">
-              <span class="inline-block text-xs font-bold px-2.5 py-1 rounded-full ${item.type === 'love' ? 'bg-rose-500/20 text-rose-300 border border-rose-400/30' : 'bg-indigo-500/20 text-indigo-300 border border-indigo-400/30'}">
-                ${item.badge}
-              </span>
-              <div class="text-[11px] text-slate-500 mt-1">${item.time}</div>
+              <span class="inline-block text-xs font-bold px-2.5 py-1 rounded-full ${item.type === 'love' ? 'bg-rose-500/20 text-rose-300 border border-rose-400/30' : 'bg-indigo-500/20 text-indigo-300 border border-indigo-400/30'}">${escapeHtml(item.badge)}</span>
+              <div class="text-[11px] text-slate-500 mt-1">${escapeHtml(item.time || '')}</div>
             </div>
-          </div>
-        `).join('');
+          </div>`).join('');
       }
 
-      // Event Listeners
+      // ---- Olaylar ----
       document.getElementById('loveForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const n1 = document.getElementById('loveName1').value;
         const n2 = document.getElementById('loveName2').value;
-        if (!n1.trim() && !n2.trim()) {
-          showToast('Rastgele örnek isimlerle aşk uyumu hesaplandı!', '💘');
-        }
+        if (!n1.trim() || !n2.trim()) showToast('Boş bırakılan isim için rastgele isim seçildi!', '💘');
         calculateLove(n1, n2);
       });
 
@@ -1101,22 +696,16 @@
       });
 
       document.getElementById('randomPairBtn').addEventListener('click', function () {
-        const n1 = pickRandom(SAMPLE_NAMES_A);
-        const n2 = pickRandom(SAMPLE_NAMES_B);
+        const n1 = pickAny(SAMPLE_NAMES_A);
+        const n2 = pickAny(SAMPLE_NAMES_B);
         calculateLove(n1, n2);
-        showToast(`${n1} & ${n2} için rastgele uyum üretildi!`, '🎲');
-      });
-
-      document.getElementById('rerollLoveBtn').addEventListener('click', function () {
-        const n1 = document.getElementById('loveName1').value;
-        const n2 = document.getElementById('loveName2').value;
-        calculateLove(n1, n2);
-        showToast('Yeni rastgele aşk yüzdesi çekildi!', '🔄');
+        showToast(`${n1} & ${n2} seçildi!`, '🎲');
       });
 
       document.getElementById('copyLoveBtn').addEventListener('click', function () {
         if (!lastLoveResult) return;
-        const text = `💘 Aşk Uyumu: ${lastLoveResult.name1} ❤️ ${lastLoveResult.name2} -> %${lastLoveResult.mainScore} (${lastLoveResult.tierLabel})\n🌹 Romantizm: %${lastLoveResult.romance} | 💬 İletişim: %${lastLoveResult.comm} | 🔥 Tutku: %${lastLoveResult.passion}\n✨ "${lastLoveResult.comment}"`;
+        const r = lastLoveResult;
+        const text = `💘 Aşk Uyumu: ${r.name1} ❤️ ${r.name2} -> %${r.mainScore} (${r.tierLabel})\n🌹 Romantizm: %${r.romance} | 💬 İletişim: %${r.comm} | 🔥 Tutku: %${r.passion} | 🛡️ Güven: %${r.trust}\n✨ "${r.comment}"`;
         copyTextToClipboard(text, 'Aşk analizi panoya kopyalandı!');
       });
 
@@ -1130,76 +719,54 @@
       document.querySelectorAll('.quick-pair-btn').forEach(btn => {
         btn.addEventListener('click', function () {
           const parts = (this.getAttribute('data-pair') || '').split(',');
-          if (parts.length === 2) {
-            calculateLove(parts[0], parts[1]);
-          }
+          if (parts.length === 2) calculateLove(parts[0], parts[1]);
         });
       });
 
-      // Persona Listeners
       document.getElementById('personaForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const nameVal = document.getElementById('personaNameInput').value;
-        if (!nameVal.trim()) {
-          showToast('Rastgele bir isim seçilerek analiz yapıldı!', '🔮');
-        }
+        if (!nameVal.trim()) showToast('İsim boş bırakıldı, rastgele bir isim seçildi!', '🔮');
         calculatePersona(nameVal, true);
-      });
-
-      document.getElementById('rerollPersonaBtn').addEventListener('click', function () {
-        const nameVal = document.getElementById('personaNameInput').value;
-        calculatePersona(nameVal, true);
-        showToast('Yeni rastgele kişilik analizi oluşturuldu!', '🎲');
       });
 
       document.getElementById('copyPersonaBtn').addEventListener('click', function () {
         if (!lastPersonaResult) return;
-        const text = `🔮 İsimden Kişilik Analizi: ${lastPersonaResult.name}\n🌟 Arketip: ${lastPersonaResult.arch.title} (${lastPersonaResult.arch.aura})\n💫 Güçlü Yönler: ${lastPersonaResult.strengths.join(', ')}\n📝 ${lastPersonaResult.arch.story}`;
+        const r = lastPersonaResult;
+        const text = `🔮 İsimden Kişilik Analizi: ${r.name}\n🌟 Arketip: ${r.arch.title} (${r.arch.aura})\n💫 Güçlü Yönler: ${r.strengths.join(', ')}\n📝 ${r.arch.story}`;
         copyTextToClipboard(text, 'Kişilik analizi panoya kopyalandı!');
       });
 
       document.querySelectorAll('.quick-person-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-          const person = this.getAttribute('data-person');
-          calculatePersona(person, true);
-        });
+        btn.addEventListener('click', function () { calculatePersona(this.getAttribute('data-person'), true); });
       });
 
       document.getElementById('clearHistoryBtn').addEventListener('click', function () {
         historyItems = [];
-        try {
-          localStorage.removeItem('ask_kisilik_history_v1');
-        } catch (e) {}
+        try { localStorage.removeItem(HISTORY_KEY); } catch (e) {}
         renderHistory();
         showToast('Geçmiş analizler temizlendi', '🧹');
       });
 
-      // Theme Toggle
+      // Tema
       const themeBtn = document.getElementById('themeToggleBtn');
       const themeIcon = document.getElementById('themeIcon');
-      let isDark = true;
       themeBtn.addEventListener('click', function () {
-        isDark = !isDark;
         const root = document.documentElement;
         const body = document.body;
-        if (isDark) {
-          root.classList.add('dark');
-          body.classList.add('dark', 'bg-slate-950', 'text-slate-100');
-          body.classList.remove('bg-rose-50/60', 'text-slate-800');
-          themeIcon.textContent = '☀️';
-        } else {
-          root.classList.remove('dark');
-          body.classList.remove('dark', 'bg-slate-950', 'text-slate-100');
-          body.classList.add('bg-rose-50/60', 'text-slate-800');
-          themeIcon.textContent = '🌙';
-        }
+        const toDark = !root.classList.contains('dark');
+        root.classList.toggle('dark', toDark);
+        body.classList.toggle('dark', toDark);
+        body.classList.toggle('bg-slate-950', toDark);
+        body.classList.toggle('text-slate-100', toDark);
+        themeIcon.textContent = toDark ? '☀️' : '🌙';
       });
 
-      // Initialize default views on load so both sections look rich immediately
-      window.addEventListener('DOMContentLoaded', function () {
+      // Açılışta varsayılan sonuçlar: geçmişe yazılmaz, parçacık çıkmaz
+      document.addEventListener('DOMContentLoaded', function () {
         loadHistory();
-        calculateLove('Elif', 'Can');
-        calculatePersona('Defne', false);
+        calculateLove('Elif', 'Can', false);
+        calculatePersona('Defne', false, false);
       });
     })();
   </script>
