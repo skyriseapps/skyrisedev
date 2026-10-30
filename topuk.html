@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Topuk Kırmaca Oyunu — Klasik Zamanlama Oyunu</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-900 min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+  <!-- Top Compact Control & Score Bar -->
+  <header class="w-full max-w-4xl mx-auto px-3 sm:px-6 pt-3 pb-2">
+    <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-800/95 border border-white/10 rounded-2xl px-3.5 py-2.5 text-white shadow-xl">
+      <div class="flex items-center gap-2.5">
+        <span class="text-2xl">🩴🔨</span>
+        <div>
+          <h1 class="text-sm sm:text-base font-black tracking-tight text-amber-300 leading-none">
+            TOPUK KIRMACA OYUNU
+          </h1>
+          <p class="text-[11px] text-slate-300 mt-0.5">
+            Çekiç tahta topuk katmanındayken <strong>HIT!</strong>'e bas! Kadının ayağına vurursan yanarsın!
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="px-3 py-1 rounded-xl bg-slate-900/90 border border-red-500/30 text-center">
+          <div class="text-[10px] font-bold text-red-400 uppercase">SKOR (YEN)</div>
+          <div id="topScoreText" class="text-sm sm:text-base font-black text-white tabular-nums">0</div>
+        </div>
+        <div class="px-3 py-1 rounded-xl bg-slate-900/90 border border-amber-500/30 text-center">
+          <div class="text-[10px] font-bold text-amber-300 uppercase">REKOR</div>
+          <div id="topHighScoreText" class="text-sm sm:text-base font-black text-amber-300 tabular-nums">0</div>
+        </div>
+        <button
+          id="restartTopBtn"
+          type="button"
+          class="px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-xs font-extrabold text-white transition-all"
+          title="Yeniden Başlat"
+        >
+          🔄 Yeniden
+        </button>
+        <button
+          id="muteBtn"
+          type="button"
+          class="px-2.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all"
+          title="Sesi Aç / Kapat"
+        >
+          🔊
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Classic White Flash-Style Game Stage -->
+  <main class="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-6 flex flex-col justify-center">
+    <div id="stageWrapper" class="relative w-full h-[460px] sm:h-[530px] md:h-[560px] bg-white rounded-2xl overflow-hidden border-4 border-slate-950 shadow-2xl">
+      <canvas id="gameCanvas"></canvas>
+
+      <!-- Bottom-Left Classic Spiky Orange HIT! Button + Prompt -->
+      <div class="absolute bottom-3 left-3 sm:bottom-5 sm:left-5 flex items-center gap-2 sm:gap-3 z-10 pointer-events-auto">
+        <button
+          id="hitBtn"
+          type="button"
+          class="group relative active:scale-90 transition-transform focus:outline-none"
+          aria-label="HIT! Vur"
+        >
+          <svg class="w-28 h-16 sm:w-36 sm:h-20 drop-shadow-md" viewBox="0 0 180 95">
+            <polygon
+              points="90,3 103,14 119,5 127,18 146,11 148,26 168,23 162,38 178,43 165,55 176,66 158,72 162,85 142,83 138,93 121,85 110,94 97,84 83,94 72,84 55,93 48,83 28,85 32,72 14,66 25,55 12,43 28,38 22,23 42,26 44,11 63,18 71,5 87,14"
+              fill="#f97316"
+              stroke="#ea580c"
+              stroke-width="3"
+            />
+            <text
+              x="90"
+              y="59"
+              text-anchor="middle"
+              fill="#ffffff"
+              font-family="Inter, sans-serif"
+              font-weight="900"
+              font-size="34"
+              letter-spacing="1"
+            >
+              HIT!
+            </text>
+          </svg>
+        </button>
+
+        <div class="flex items-center gap-1.5 text-red-600 font-black text-xs sm:text-lg tracking-tight pointer-events-none">
+          <span class="text-xl sm:text-2xl leading-none">⬅</span>
+          <span>Zamanlamayı Tutturarak Tıkla!</span>
+        </div>
+      </div>
+
+      <!-- Start / Level Clear / Game Over Modal Overlay -->
+      <div id="overlayModal" class="absolute inset-0 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-20 hidden">
+        <div id="modalEmoji" class="text-5xl sm:text-6xl mb-3 animate-bounce">👠💥</div>
+        <h2 id="modalTitle" class="text-2xl sm:text-4xl font-black text-red-600 tracking-tight mb-2">
+          YANDIN!
+        </h2>
+        <p id="modalDesc" class="text-xs sm:text-base text-slate-700 max-w-md mb-5 font-semibold leading-relaxed">
+          Kadının ayağına vurdun! Çekiç sadece alttaki kahverengi topuk katmanlarının hizasındayken vurmalısın.
+        </p>
+
+        <div id="modalStats" class="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
+          <div class="p-3 rounded-xl bg-amber-50 border-2 border-amber-300">
+            <div class="text-[11px] font-bold text-amber-800 uppercase">SKOR (YEN)</div>
+            <div id="modalYen" class="text-lg sm:text-2xl font-black text-red-600 mt-0.5">0 YEN</div>
+          </div>
+          <div class="p-3 rounded-xl bg-rose-50 border-2 border-rose-300">
+            <div class="text-[11px] font-bold text-rose-800 uppercase">SEVİYE</div>
+            <div id="modalLady" class="text-lg sm:text-2xl font-black text-rose-600 mt-0.5">LADY 1</div>
+          </div>
+          <div class="p-3 rounded-xl bg-emerald-50 border-2 border-emerald-300">
+            <div class="text-[11px] font-bold text-emerald-800 uppercase">KIRILAN KAT</div>
+            <div id="modalBlocks" class="text-lg sm:text-2xl font-black text-emerald-600 mt-0.5">0</div>
+          </div>
+        </div>
+
+        <button
+          id="modalActionBtn"
+          type="button"
+          class="px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-black text-base sm:text-lg shadow-xl shadow-orange-500/30 active:scale-95 transition-all"
+        >
+          🔄 TEKRAR OYNA
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Instructions Bar -->
+  <footer class="w-full max-w-4xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between text-xs text-slate-300">
+    <div>🎯 <strong>Nasıl Oynanır:</strong> Çekiç yukarı-aşağı kayarken <strong>kahverengi topuk katlarına</strong> vurdukça topuk 1 kat azalır. <strong>Kadının ayağına vurursan yanarsın!</strong></div>
+    <div>Kısayol: <strong>HIT! Butonu</strong>, <strong>Ekrana Tıkla</strong> veya <strong>BOŞLUK (Space)</strong></div>
+  </footer>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      const stageWrapper = document.getElementById('stageWrapper');
+
+      const topScoreText = document.getElementById('topScoreText');
+      const topHighScoreText = document.getElementById('topHighScoreText');
+      const restartTopBtn = document.getElementById('restartTopBtn');
+      const muteBtn = document.getElementById('muteBtn');
+      const hitBtn = document.getElementById('hitBtn');
+
+      const overlayModal = document.getElementById('overlayModal');
+      const modalEmoji = document.getElementById('modalEmoji');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalYen = document.getElementById('modalYen');
+      const modalLady = document.getElementById('modalLady');
+      const modalBlocks = document.getElementById('modalBlocks');
+      const modalActionBtn = document.getElementById('modalActionBtn');
+
+      // Web Audio API Synthesizer for Classic Sound Effects
+      let audioCtx = null;
+      let isMuted = false;
+
+      function initAudio() {
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+
+      function playSound(type) {
+        if (isMuted || !audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+          if (type === 'cleanHit') {
+            // Crisp wooden block knock-out sound!
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.exponentialRampToValueAtTime(115, now + 0.08);
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.085);
+
+            // Coin / Yen chime
+            const chime = audioCtx.createOscillator();
+            const cGain = audioCtx.createGain();
+            chime.type = 'sine';
+            chime.frequency.setValueAtTime(920, now + 0.02);
+            chime.frequency.setValueAtTime(1380, now + 0.07);
+            cGain.gain.setValueAtTime(0.2, now + 0.02);
+            cGain.gain.exponentialRampToValueAtTime(0.005, now + 0.2);
+            chime.connect(cGain);
+            cGain.connect(audioCtx.destination);
+            chime.start(now + 0.02);
+            chime.stop(now + 0.21);
+          } else if (type === 'missAir') {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(210, now);
+            osc.frequency.exponentialRampToValueAtTime(95, now + 0.12);
+            gain.gain.setValueAtTime(0.22, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.13);
+          } else if (type === 'failFoot') {
+            // Cartoon ouch / buzzer when hitting the woman's foot!
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(360, now);
+            osc.frequency.linearRampToValueAtTime(85, now + 0.45);
+            gain.gain.setValueAtTime(0.38, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.46);
+          } else if (type === 'ladyClear') {
+            const notes = [523.25, 659.25, 783.99, 1046.5];
+            notes.forEach((freq, idx) => {
+              const osc = audioCtx.createOscillator();
+              const gain = audioCtx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(freq, now + idx * 0.065);
+              gain.gain.setValueAtTime(0.24, now + idx * 0.065);
+              gain.gain.exponentialRampToValueAtTime(0.008, now + idx * 0.065 + 0.22);
+              osc.connect(gain);
+              gain.connect(audioCtx.destination);
+              osc.start(now + idx * 0.065);
+              osc.stop(now + idx * 0.065 + 0.23);
+            });
+          }
+        } catch (e) {}
+      }
+
+      // Lady visual themes (Strap color, Nail color, Flower color, Wood color)
+      const LADY_STYLES = [
+        { strap: '#fbcfe8', nail: '#a855f7', flower: '#facc15', wood: '#855854', woodMid: '#9e6b66' },
+        { strap: '#fecdd3', nail: '#e11d48', flower: '#38bdf8', wood: '#7c4d3a', woodMid: '#9a634d' },
+        { strap: '#ddd6fe', nail: '#06b6d4', flower: '#fb7185', wood: '#6b4c5c', woodMid: '#876274' },
+        { strap: '#bbf7d0', nail: '#f97316', flower: '#e879f9', wood: '#78553a', woodMid: '#946b4b' },
+        { strap: '#fef08a', nail: '#ec4899', flower: '#a855f7', wood: '#854d4d', woodMid: '#a16060' }
+      ];
+
+      // Game State
+      let state = 'playing'; // 'playing', 'tumbling', 'ladyClear', 'gameover'
+      let ladyNumber = 1;
+      let scoreYen = 0;
+      let highScoreYen = 0;
+      let totalBrokenBlocks = 0;
+      let timeLeft = 30;
+      let chanceLeft = 2;
+
+      // Stack & Physics State
+      let initialBlockCount = 3;
+      let blocks = []; // Remaining wooden heel blocks from bottom (0) to top (blocks.length - 1)
+      let flyingBlocks = []; // Knocked out heel layers flying right
+      let popTexts = [];
+      let blockHeight = 60;
+      let blockWidth = 285;
+      let soleHeight = 34;
+      let groundY = 390;
+      let towerCenterX = 430;
+
+      // Drop & Tumble animations
+      let upperDropOffset = 0;
+      let footBounce = 0;
+      let footHurtFlash = 0;
+      let tumbleAngle = 0;
+      let tumbleVX = 0;
+      let tumbleVY = 0;
+      let tumbleOffsetX = 0;
+      let tumbleOffsetY = 0;
+
+      // Hammer State
+      let hammerY = 240;
+      let hammerDir = 1; // 1 = sliding down, -1 = sliding up
+      let hammerSlideSpeed = 310; // pixels per second
+      let hammerSwingProgress = 0;
+      let isSwinging = false;
+      let swingHitEvaluated = false;
+
+      let animFrameId = null;
+      let lastTime = 0;
+
+      function loadHighScore() {
+        try {
+          const saved = localStorage.getItem('topuk_kirmaca_yen_rekor_v2');
+          if (saved) highScoreYen = parseInt(saved, 10) || 0;
+        } catch (e) {
+          highScoreYen = 0;
+        }
+        topHighScoreText.textContent = highScoreYen;
+      }
+
+      function saveHighScore() {
+        if (scoreYen > highScoreYen) {
+          highScoreYen = scoreYen;
+          topHighScoreText.textContent = highScoreYen;
+          try {
+            localStorage.setItem('topuk_kirmaca_yen_rekor_v2', String(highScoreYen));
+          } catch (e) {}
+        }
+      }
+
+      function setupLady(ladyIdx) {
+        const w = canvas.width || 800;
+        const h = canvas.height || 520;
+        groundY = h * 0.78;
+        towerCenterX = w * 0.54;
+
+        // Number of heel layers starts at 3 (like screenshot) and grows up to 6
+        initialBlockCount = Math.min(6, 3 + Math.floor((ladyIdx - 1) / 2));
+        blockWidth = Math.min(305, Math.max(200, w * 0.36));
+        blockHeight = Math.min(60, Math.max(40, (h * 0.40) / initialBlockCount));
+        soleHeight = Math.round(blockHeight * 0.56);
+
+        blocks = [];
+        for (let i = 0; i < initialBlockCount; i++) {
+          blocks.push({
+            id: i,
+            seed: i * 17 + ladyIdx * 7
+          });
+        }
+
+        upperDropOffset = 0;
+        footBounce = 0;
+        footHurtFlash = 0;
+        tumbleAngle = 0;
+        tumbleOffsetX = 0;
+        tumbleOffsetY = 0;
+        isSwinging = false;
+        hammerSwingProgress = 0;
+
+        // Start hammer near top and slide up & down linearly
+        hammerY = groundY - initialBlockCount * blockHeight - soleHeight - 60;
+        hammerDir = 1;
+        hammerSlideSpeed = 290 + Math.min(280, (ladyIdx - 1) * 42);
+      }
+
+      function startNewGame() {
+        initAudio();
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+        ladyNumber = 1;
+        scoreYen = 0;
+        totalBrokenBlocks = 0;
+        timeLeft = 30;
+        chanceLeft = 2;
+        flyingBlocks = [];
+        popTexts = [];
+        state = 'playing';
+        overlayModal.classList.add('hidden');
+        topScoreText.textContent = scoreYen;
+
+        setupLady(ladyNumber);
+        lastTime = performance.now();
+        animFrameId = requestAnimationFrame(loop);
+      }
+
+      // Trigger Hammer Strike!
+      function triggerStrike() {
+        if (state !== 'playing') return;
+        if (isSwinging) return;
+        initAudio();
+        isSwinging = true;
+        hammerSwingProgress = 0.01;
+        swingHitEvaluated = false;
+      }
+
+      // Evaluate what the hammer hit at peak horizontal extension
+      function evaluateHammerImpact() {
+        if (blocks.length === 0) return;
+
+        // Vertical position of the black hammer blade nose
+        const bladeCenterY = hammerY + 18;
+
+        // Current vertical bounds of the wooden heel stack & the woman's foot above it
+        const stackHeight = blocks.length * blockHeight;
+        const heelTopY = groundY - stackHeight; // Top edge of the wooden heel blocks
+        const footTopY = heelTopY - soleHeight * 3.6; // Top of the woman's foot/ankle
+
+        // CASE 1: Did the hammer hit the woman's foot or the top sandal strap area?
+        // (Any hit above heelTopY while within the foot/sandal vertical zone)
+        if (bladeCenterY < heelTopY + 2 && bladeCenterY >= footTopY - 25) {
+          playSound('failFoot');
+          footHurtFlash = 1;
+          popTexts.push({
+            x: towerCenterX,
+            y: bladeCenterY - 15,
+            text: '💥 KADININ AYAĞINA VURDUN! YANDIN!',
+            color: '#dc2626',
+            alpha: 1.4
+          });
+          triggerTumble('Kadının ayağına vurdun ve yandın! Sadece alttaki kahverengi topuk katlarına vurmalısın.');
+          return;
+        }
+
+        // CASE 2: Did the hammer swing into empty air above the foot or below the ground?
+        if (bladeCenterY < footTopY - 25 || bladeCenterY > groundY + 10) {
+          playSound('missAir');
+          chanceLeft -= 1;
+          popTexts.push({
+            x: towerCenterX - 40,
+            y: bladeCenterY,
+            text: `BOŞA VURDUN! (CHANCE: ${Math.max(0, chanceLeft)})`,
+            color: '#ea580c',
+            alpha: 1
+          });
+          if (chanceLeft < 0) {
+            chanceLeft = 0;
+            triggerTumble('Tüm CHANCE (ıska) haklarını bitirdin!');
+          }
+          return;
+        }
+
+        // CASE 3: HIT ON THE WOODEN HEEL! (heelTopY <= bladeCenterY <= groundY)
+        // Determine which wooden heel layer was struck (0 = bottom layer, blocks.length - 1 = top heel layer)
+        const distFromGround = Math.max(0, groundY - bladeCenterY);
+        const hitLayerIndex = Math.min(blocks.length - 1, Math.max(0, Math.floor(distFromGround / blockHeight)));
+
+        // Knock out that exact wooden heel layer -> heel stack decreases by 1 layer!
+        playSound('cleanHit');
+        const removedLayer = blocks.splice(hitLayerIndex, 1)[0];
+        const layerTopY = groundY - (hitLayerIndex + 1) * blockHeight;
+
+        flyingBlocks.push({
+          x: towerCenterX - blockWidth / 2,
+          y: layerTopY,
+          w: blockWidth,
+          h: blockHeight,
+          vx: 20 + Math.random() * 5,
+          vy: -2.5 - Math.random() * 2.5,
+          rot: 0,
+          vRot: 0.14 + Math.random() * 0.06,
+          style: getCurrentStyle()
+        });
+
+        // Smoothly drop the foot & any layers above the broken layer down by 1 blockHeight!
+        upperDropOffset = blockHeight;
+        footBounce = 9;
+        totalBrokenBlocks += 1;
+
+        const yenEarned = 150 + ladyNumber * 50;
+        scoreYen += yenEarned;
+        topScoreText.textContent = scoreYen;
+        saveHighScore();
+
+        popTexts.push({
+          x: towerCenterX + 35,
+          y: layerTopY + blockHeight * 0.5,
+          text: `🔨 -1 KAT! +${yenEarned} YEN`,
+          color: '#16a34a',
+          alpha: 1.1
+        });
+
+        // If all wooden heel layers are broken, only the thin sandal remains -> LADY CLEARED!
+        if (blocks.length === 0) {
+          state = 'ladyClear';
+          playSound('ladyClear');
+          const clearBonus = 500 * ladyNumber;
+          scoreYen += clearBonus;
+          timeLeft = Math.min(99, timeLeft + 5);
+          topScoreText.textContent = scoreYen;
+          saveHighScore();
+
+          popTexts.push({
+            x: towerCenterX,
+            y: groundY - 110,
+            text: `🎉 LADY ${ladyNumber} TOPUĞU SIFIRLANDI! +${clearBonus} YEN`,
+            color: '#d97706',
+            alpha: 1.5
+          });
+
+          setTimeout(() => {
+            if (state === 'ladyClear') {
+              ladyNumber += 1;
+              setupLady(ladyNumber);
+              state = 'playing';
+            }
+          }, 1100);
+        }
+      }
+
+      function triggerTumble(reason) {
+        state = 'tumbling';
+        tumbleVX = 4.5;
+        tumbleVY = -5.5;
+        setTimeout(() => {
+          showGameOverModal(reason);
+        }, 850);
+      }
+
+      function showGameOverModal(reason) {
+        state = 'gameover';
+        saveHighScore();
+        modalEmoji.textContent = '🦶💥';
+        modalTitle.textContent = 'YANDIN! OYUN BİTTİ';
+        modalDesc.textContent = reason;
+        modalYen.textContent = `${scoreYen} YEN`;
+        modalLady.textContent = `LADY ${ladyNumber}`;
+        modalBlocks.textContent = String(totalBrokenBlocks);
+        modalActionBtn.textContent = '🔄 TEKRAR OYNA';
+        overlayModal.classList.remove('hidden');
+      }
+
+      function getCurrentStyle() {
+        return LADY_STYLES[(ladyNumber - 1) % LADY_STYLES.length];
+      }
+
+      // Main Update Loop
+      function update(dt) {
+        if (state === 'playing') {
+          timeLeft -= dt;
+          if (timeLeft <= 0) {
+            timeLeft = 0;
+            playSound('failFoot');
+            showGameOverModal('Süre bitti! Zaman dolmadan tüm topuk katlarını kırmalısın.');
+            return;
+          }
+
+          // Slide hammer continuously UP and DOWN between the top of the foot and the ground
+          // Notice: Even as heel layers decrease and the foot drops lower, the hammer slides
+          // across both the woman's foot (danger zone!) and the remaining heel layers!
+          const currentStackH = blocks.length * blockHeight;
+          const currentHeelTopY = groundY - currentStackH;
+          const topSlideLimit = currentHeelTopY - soleHeight * 3.1; // Covers the woman's foot!
+          const bottomSlideLimit = groundY - 22; // Covers down to the bottom heel layer!
+
+          if (!isSwinging) {
+            hammerY += hammerDir * hammerSlideSpeed * dt;
+            if (hammerY >= bottomSlideLimit) {
+              hammerY = bottomSlideLimit;
+              hammerDir = -1;
+            } else if (hammerY <= topSlideLimit) {
+              hammerY = topSlideLimit;
+              hammerDir = 1;
+            }
+          }
+        }
+
+        // Update Hammer Horizontal Swing
+        if (isSwinging) {
+          hammerSwingProgress += dt * 8.2;
+          if (hammerSwingProgress >= 0.45 && !swingHitEvaluated) {
+            swingHitEvaluated = true;
+            if (state === 'playing') {
+              evaluateHammerImpact();
+            }
+          }
+          if (hammerSwingProgress >= 1) {
+            isSwinging = false;
+            hammerSwingProgress = 0;
+          }
+        }
+
+        // Smooth drop animation when a heel layer is removed
+        if (upperDropOffset > 0) {
+          upperDropOffset = Math.max(0, upperDropOffset - dt * 650);
+        }
+        if (footBounce > 0) {
+          footBounce = Math.max(0, footBounce - dt * 38);
+        }
+        if (footHurtFlash > 0) {
+          footHurtFlash = Math.max(0, footHurtFlash - dt * 2.5);
+        }
+
+        // Tumble physics when hitting the foot
+        if (state === 'tumbling') {
+          tumbleAngle += dt * 3.1;
+          tumbleOffsetX += tumbleVX;
+          tumbleOffsetY += tumbleVY;
+          tumbleVY += 0.48;
+        }
+
+        // Update Flying Knocked-out Heel Layers
+        for (let i = flyingBlocks.length - 1; i >= 0; i--) {
+          const fb = flyingBlocks[i];
+          fb.x += fb.vx;
+          fb.y += fb.vy;
+          fb.vy += 0.42;
+          fb.rot += fb.vRot;
+          if (fb.x > canvas.width + 400 || fb.y > canvas.height + 300) {
+            flyingBlocks.splice(i, 1);
+          }
+        }
+
+        // Update Pop Texts
+        for (let i = popTexts.length - 1; i >= 0; i--) {
+          const pt = popTexts[i];
+          pt.y -= dt * 40;
+          pt.alpha -= dt * 1.05;
+          if (pt.alpha <= 0) popTexts.splice(i, 1);
+        }
+      }
+
+      // Draw a single wooden heel layer matching the screenshot
+      function drawWoodenBlock(x, y, w, h, style) {
+        const outlineColor = '#4a0404';
+        ctx.save();
+        ctx.translate(x, y);
+
+        // Main wood block fill
+        ctx.fillStyle = style.wood;
+        ctx.strokeStyle = outlineColor;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.rect(0, 0, w, h);
+        ctx.fill();
+        ctx.stroke();
+
+        // Center vertical column stripe
+        const colW = w * 0.25;
+        const colX = w * 0.28;
+        ctx.fillStyle = style.woodMid;
+        ctx.fillRect(colX, 2, colW, h - 4);
+
+        ctx.strokeStyle = outlineColor;
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(colX, 0);
+        ctx.lineTo(colX, h);
+        ctx.moveTo(colX + colW, 0);
+        ctx.lineTo(colX + colW, h);
+        ctx.stroke();
+
+        // Horizontal wood grain lines
+        ctx.strokeStyle = 'rgba(74, 4, 4, 0.32)';
+        ctx.lineWidth = 2;
+        const grainY1 = h * 0.33;
+        const grainY2 = h * 0.67;
+        ctx.beginPath();
+        ctx.moveTo(14, grainY1);
+        ctx.lineTo(colX - 12, grainY1);
+        ctx.moveTo(colX + colW + 14, grainY1);
+        ctx.lineTo(w - 16, grainY1);
+        ctx.moveTo(18, grainY2);
+        ctx.lineTo(colX - 16, grainY2);
+        ctx.moveTo(colX + colW + 12, grainY2);
+        ctx.lineTo(w - 14, grainY2);
+        ctx.stroke();
+
+        // Small notch hash marks along vertical seams
+        ctx.strokeStyle = outlineColor;
+        ctx.lineWidth = 2.2;
+        for (let m = 1; m <= 4; m++) {
+          const my = (h / 5) * m;
+          ctx.beginPath();
+          ctx.moveTo(0, my);
+          ctx.lineTo(8, my);
+          ctx.moveTo(w - 8, my);
+          ctx.lineTo(w, my);
+          ctx.moveTo(colX + colW - 8, my);
+          ctx.lineTo(colX + colW, my);
+          ctx.stroke();
+        }
+
+        ctx.restore();
+      }
+
+      // Draw Top Sandal Base + Woman's Foot (Danger Zone if hit!)
+      function drawSandalAndFoot(leftX, soleTopY, w, hSole, style) {
+        const outline = '#4a0404';
+        ctx.save();
+        ctx.translate(leftX, soleTopY);
+
+        // 1. Top Dark Brown Sandal Sole Base
+        ctx.fillStyle = '#6d4542';
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.rect(0, 0, w, hSole);
+        ctx.fill();
+        ctx.stroke();
+
+        // Rounded top arch of the center column inside the sole
+        const colW = w * 0.25;
+        const colX = w * 0.28;
+        ctx.fillStyle = style.woodMid;
+        ctx.beginPath();
+        ctx.moveTo(colX, hSole);
+        ctx.lineTo(colX, hSole * 0.38);
+        ctx.quadraticCurveTo(colX + colW / 2, hSole * 0.08, colX + colW, hSole * 0.38);
+        ctx.lineTo(colX + colW, hSole);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 2. Woman's Foot resting on top of the sandal sole
+        ctx.save();
+        ctx.translate(0, -footBounce * 0.5);
+
+        // Skin fill (flashes red if hit!)
+        ctx.fillStyle = footHurtFlash > 0 ? '#f87171' : '#d69e66';
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.04, -hSole * 2.9);
+        ctx.quadraticCurveTo(w * 0.01, -hSole * 1.1, w * 0.03, 0);
+        ctx.lineTo(w * 0.96, 0);
+        ctx.quadraticCurveTo(w * 1.01, -hSole * 0.75, w * 0.92, -hSole * 0.95);
+        ctx.quadraticCurveTo(w * 0.62, -hSole * 1.35, w * 0.42, -hSole * 2.9);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Ankle bone & skin shine highlights
+        ctx.fillStyle = '#f3d19c';
+        ctx.beginPath();
+        ctx.ellipse(w * 0.16, -hSole * 2.2, 11, 7, 0.3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(w * 0.41, -hSole * 1.65, 26, 6, 0.48, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Sparkly Painted Toenail protruding on the right
+        ctx.fillStyle = style.nail;
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.79, -hSole * 0.85);
+        ctx.quadraticCurveTo(w * 0.99, -hSole * 0.92, w * 1.03, -hSole * 0.45);
+        ctx.quadraticCurveTo(w * 0.90, -hSole * 0.62, w * 0.79, -hSole * 0.60);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Little white sparkles on the toenail
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(w * 0.86, -hSole * 0.78, 3, 3);
+        ctx.fillRect(w * 0.93, -hSole * 0.72, 4, 4);
+
+        // Back Pink Heel Cushion / Strap
+        ctx.fillStyle = style.strap;
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.0, 0);
+        ctx.quadraticCurveTo(-w * 0.02, -hSole * 1.35, w * 0.04, -hSole * 1.45);
+        ctx.quadraticCurveTo(w * 0.22, -hSole * 1.15, w * 0.31, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Yellow 3-Petal Flower Ornament on top of front strap
+        ctx.fillStyle = style.flower;
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 3.8;
+        const fx = w * 0.68;
+        const fy = -hSole * 1.45;
+        for (let p = -1; p <= 1; p++) {
+          ctx.save();
+          ctx.translate(fx, fy);
+          ctx.rotate(p * 0.45 + 0.3);
+          ctx.beginPath();
+          ctx.ellipse(0, -18, 12, 22, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Front Pink Sandal Strap
+        ctx.fillStyle = style.strap;
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.54, 0);
+        ctx.quadraticCurveTo(w * 0.57, -hSole * 1.55, w * 0.66, -hSole * 1.55);
+        ctx.quadraticCurveTo(w * 0.80, -hSole * 1.45, w * 0.79, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+        ctx.restore();
+      }
+
+      // Draw the Vertically Sliding Hammer on the Left
+      function drawHammer() {
+        const outline = '#4a0404';
+        const baseHammerX = towerCenterX - blockWidth / 2 - 110;
+        const swingCurve = isSwinging ? Math.sin(hammerSwingProgress * Math.PI) : 0;
+        const hx = baseHammerX + swingCurve * 112;
+        const hy = hammerY;
+
+        // Subtle horizontal aim guide line from hammer nose to the stack
+        const bladeCenterY = hy + 18;
+        const heelTopY = groundY - blocks.length * blockHeight;
+        const isDangerZone = bladeCenterY < heelTopY + 2;
+
+        ctx.save();
+        ctx.setLineDash([6, 6]);
+        ctx.strokeStyle = isDangerZone ? 'rgba(239, 68, 68, 0.45)' : 'rgba(22, 163, 74, 0.45)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(hx + 68, bladeCenterY);
+        ctx.lineTo(towerCenterX - blockWidth / 2, bladeCenterY);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.translate(hx, hy);
+        if (isSwinging) {
+          ctx.rotate(swingCurve * 0.14);
+        }
+
+        // Vertical Wooden Handle
+        ctx.fillStyle = '#c89d66';
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 3.8;
+        ctx.beginPath();
+        ctx.roundRect(-11, -38, 22, 85, 10);
+        ctx.fill();
+        ctx.stroke();
+
+        // Top Grey & Red Bullseye Circle Cap
+        ctx.fillStyle = '#9ca3af';
+        ctx.beginPath();
+        ctx.arc(0, -38, 22, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#dc2626';
+        ctx.beginPath();
+        ctx.arc(0, -38, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Horizontal Black Curved Hammer Head Blade
+        ctx.fillStyle = '#1f2937';
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(-55, -2);
+        ctx.quadraticCurveTo(-68, 18, -42, 30);
+        ctx.lineTo(56, 30);
+        ctx.quadraticCurveTo(68, 30, 68, 18);
+        ctx.quadraticCurveTo(68, 6, 54, 6);
+        ctx.lineTo(-34, 6);
+        ctx.quadraticCurveTo(-48, 6, -55, -2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // White glossy shine on hammer blade
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(-45, 14);
+        ctx.quadraticCurveTo(-35, 20, -22, 19);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      // Render Entire Stage
+      function render() {
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        // Pure crisp white background like the original Flash game
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+
+        const style = getCurrentStyle();
+
+        // Ground shadow ellipse under the platform sandal
+        ctx.fillStyle = '#d1d5db';
+        ctx.beginPath();
+        ctx.ellipse(towerCenterX + 12, groundY + 6, blockWidth * 0.64, 14, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw Stack of Heel Layers + Woman's Foot
+        ctx.save();
+        if (state === 'tumbling') {
+          ctx.translate(towerCenterX + tumbleOffsetX, groundY + tumbleOffsetY);
+          ctx.rotate(tumbleAngle);
+          ctx.translate(-towerCenterX, -groundY);
+        }
+
+        const leftBaseX = towerCenterX - blockWidth / 2;
+
+        // Draw each remaining wooden heel layer from bottom (0) to top
+        for (let i = 0; i < blocks.length; i++) {
+          const by = groundY - (i + 1) * blockHeight - upperDropOffset;
+          drawWoodenBlock(leftBaseX, by, blockWidth, blockHeight, style);
+        }
+
+        // Draw Sandal Sole + Woman's Foot on top of the remaining heel layers
+        const soleTopY = groundY - blocks.length * blockHeight - soleHeight - upperDropOffset;
+        drawSandalAndFoot(leftBaseX, soleTopY, blockWidth, soleHeight, style);
+        ctx.restore();
+
+        // Draw Flying Knocked-out Heel Layers
+        for (let i = 0; i < flyingBlocks.length; i++) {
+          const fb = flyingBlocks[i];
+          ctx.save();
+          ctx.translate(fb.x + fb.w / 2, fb.y + fb.h / 2);
+          ctx.rotate(fb.rot);
+          drawWoodenBlock(-fb.w / 2, -fb.h / 2, fb.w, fb.h, fb.style);
+          ctx.restore();
+        }
+
+        // Draw Vertically Sliding Hammer on Left
+        drawHammer();
+
+        // Classic Red HUD Texts matching Screenshot
+        ctx.fillStyle = '#ef4444';
+        ctx.textAlign = 'left';
+        ctx.font = '800 26px Inter, sans-serif';
+        ctx.fillText(`LADY ${ladyNumber}`, 22, 42);
+
+        ctx.font = '700 14px Inter, sans-serif';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText(`KALAN TOPUK: ${blocks.length} KAT`, 22, 66);
+
+        // Top-Right TIME & CHANCE
+        ctx.fillStyle = '#ef4444';
+        ctx.textAlign = 'right';
+        ctx.font = '800 22px Inter, sans-serif';
+        ctx.fillText('TIME', w - 22, 38);
+
+        ctx.font = '900 64px Inter, sans-serif';
+        ctx.fillText(String(Math.ceil(timeLeft)), w - 20, 96);
+
+        ctx.font = '800 22px Inter, sans-serif';
+        ctx.fillText('CHANCE', w - 22, 142);
+
+        ctx.font = '900 36px Inter, sans-serif';
+        ctx.fillText(String(Math.max(0, chanceLeft)), w - 22, 180);
+
+        // Bottom-Right YEN Score
+        ctx.font = '900 34px Inter, sans-serif';
+        ctx.fillText(`${scoreYen} YEN`, w - 22, h - 22);
+
+        // Draw Floating Pop Texts
+        for (let i = 0; i < popTexts.length; i++) {
+          const pt = popTexts[i];
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, Math.min(1, pt.alpha));
+          ctx.font = '900 19px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = pt.color;
+          ctx.fillText(pt.text, pt.x, pt.y);
+          ctx.restore();
+        }
+      }
+
+      function loop(timestamp) {
+        if (!lastTime) lastTime = timestamp;
+        const dt = Math.min(0.05, (timestamp - lastTime) / 1000);
+        lastTime = timestamp;
+
+        update(dt);
+        render();
+
+        if (state !== 'gameover') {
+          animFrameId = requestAnimationFrame(loop);
+        }
+      }
+
+      function resizeCanvas() {
+        const rect = stageWrapper.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        groundY = canvas.height * 0.78;
+        towerCenterX = canvas.width * 0.54;
+        render();
+      }
+      window.addEventListener('resize', resizeCanvas);
+
+      // Controls: HIT! button, Canvas tap, or Spacebar
+      hitBtn.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerStrike();
+      });
+
+      canvas.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        triggerStrike();
+      });
+
+      window.addEventListener('keydown', function (e) {
+        if (e.code === 'Space' || e.key === 'Enter') {
+          e.preventDefault();
+          if (state === 'gameover') {
+            startNewGame();
+          } else {
+            triggerStrike();
+          }
+        }
+      });
+
+      restartTopBtn.addEventListener('click', startNewGame);
+      modalActionBtn.addEventListener('click', startNewGame);
+
+      muteBtn.addEventListener('click', function () {
+        isMuted = !isMuted;
+        muteBtn.textContent = isMuted ? '🔇' : '🔊';
+      });
+
+      window.onload = function () {
+        loadHighScore();
+        resizeCanvas();
+        startNewGame();
+      };
+    })();
+  </script>
+</body>
+</html>
